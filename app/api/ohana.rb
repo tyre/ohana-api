@@ -1,9 +1,9 @@
-#require "garner/mixins/rack"
+require "garner/mixins/rack"
 
 module Ohana
   class API < Grape::API
 
-    #helpers Garner::Mixins::Rack
+    helpers Garner::Mixins::Rack
     use Rack::ConditionalGet
     use Rack::ETag
 
@@ -61,10 +61,10 @@ module Ohana
         NOTE
       }
       get ':id' do
-        #garner.bind(Location) do
+        garner.bind(Location) do
           location = Location.find(params[:id])
-          present(location, with: Entities::Location)
-        #end
+          present(location, with: Entities::Location).as_json
+        end
       end
 
       desc "Update a location"
