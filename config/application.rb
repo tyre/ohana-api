@@ -82,8 +82,8 @@ module OhanaApi
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    require "api_defender"
-    config.middleware.insert_after Rack::Lock, ApiDefender
+    # require "api_defender"
+    # config.middleware.insert_after Rack::Lock, ApiDefender
 
     # CORS support
     config.middleware.use Rack::Cors do
