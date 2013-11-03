@@ -477,11 +477,11 @@ module Ohana
         optional :page, type: Integer, default: 1
       end
       get do
-        #garner.options(expires_in: 30.minutes) do
+        garner.options(expires_in: 30.minutes) do
           locations = Location.search(params)
           set_link_header(locations)
           locations
-        #end
+        end
       end
     end
 
