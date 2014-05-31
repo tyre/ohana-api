@@ -32,7 +32,7 @@ task :load_data => :environment do
       # You might need to increase the sleep value. Try small increments.      
       # sleep 0.1
       sleep ENV['SLEEP'].to_f if ENV['SLEEP']
-    end
+    end unless locs.nil?
   end
   
   if ENV['METHOD'] == 'readall'
@@ -43,7 +43,7 @@ task :load_data => :environment do
       end
     end
   else
-    File.open(file).each do |line|
+    open(file).each do |line|
       data_item = JSON.parse(line)
       parse(data_item)
     end
