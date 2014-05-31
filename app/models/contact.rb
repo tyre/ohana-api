@@ -5,7 +5,7 @@ class Contact < ActiveRecord::Base
 
   normalize_attributes :name, :title, :email, :fax, :phone, :extension
 
-  validates_presence_of :name, :title, message: "can't be blank for Contact"
+  validates_presence_of :name, message: "can't be blank for Contact"
 
   validates_formatting_of :email,
                           with: /.+@.+\..+/i,
