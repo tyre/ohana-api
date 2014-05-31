@@ -1,18 +1,19 @@
 require 'json'
+require 'open-uri'
 
 task :setup_db => [
   :create_categories,
   :load_data
   ]
+  
 
 task :load_data => :environment do
-  file = "data/sample_data.json"
+  file = ENV['FILE'] || "data/sample_data.json"
 
   puts "===> Populating the #{Rails.env} DB with #{file}..."
   puts "===> Depending on the size of your data, this can take several minutes..."
-
-  File.open(file).each do |line|
-    data_item = JSON.parse(line)
+  
+  def parse(data_item)
     org = Organization.create!(data_item.except("locations"))
 
     locs = data_item["locations"]
@@ -28,8 +29,23 @@ task :load_data => :environment do
         end
       end
       # Uncomment line 32 below if you get Geocoder::OverQueryLimitError
-      # You might need to increase the sleep value. Try small increments.
+      # You might need to increase the sleep value. Try small increments.      
       # sleep 0.1
+      sleep ENV['SLEEP'].to_f if ENV['SLEEP']
+    end
+  end
+  
+  if ENV['METHOD'] == 'readall'
+    open(file) do |f|
+      records = JSON.parse(f.read)
+      records.each do |data_item|
+        parse(data_item)
+      end
+    end
+  else
+    File.open(file).each do |line|
+      data_item = JSON.parse(line)
+      parse(data_item)
     end
   end
   puts "===> Done populating the DB with #{file}."
