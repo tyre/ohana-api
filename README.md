@@ -14,7 +14,7 @@ You can see a running version of the application at
 We are happy to announce that this project has been awarded a [grant from the Knight Foundation](http://www.knightfoundation.org/grants/201447979/), which means we get to keep working on it in 2014! Our primary goals this year are: simplifying the installation process, streamlining the code, reducing dependencies, and preparing the project for broader installation by a variety of organizations and governments.
 
 ## Data Schema
-If you would like to try out the current version of the project that uses Postgres, please read the Wiki article about [Populating the Postgres DB from a JSON file](https://github.com/codeforamerica/ohana-api/wiki/Populating-the-Postgres-database-from-a-JSON-file). That article documents the current schema and data dictionary, but please note that this will be in flux as we are working with various interested parties to define a [Human Services Data Specification](https://github.com/codeforamerica/OpenReferral).
+If you would like to try out the current version of the project that uses Postgres, please read the Wiki article about [Populating the Postgres DB from a JSON file](https://github.com/codeforamerica/sfbrigade/wiki/Populating-the-Postgres-database-from-a-JSON-file). That article documents the current schema and data dictionary, but please note that this will be in flux as we are working with various interested parties to define a [Human Services Data Specification](https://github.com/codeforamerica/OpenReferral).
 
 ## Taxonomy
 By default, this project uses the [Open Eligibility](http://openeligibility.org) taxonomy to assign Services to [Categories](https://github.com/codeforamerica/ohana-api/blob/master/app/models/category.rb).
