@@ -170,6 +170,8 @@ describe Ohana::API do
             },
             'coordinates' => @location.coordinates,
             'description' => @location.description,
+            'latitude' => @location.latitude,
+            'longitude' => @location.longitude,
             'name' => @location.name,
             'short_desc' => 'short description',
             'slug' => 'vrs-services',
@@ -315,16 +317,6 @@ describe Ohana::API do
         put(
           "api/locations/#{@loc.id}",
           { faxes_attributes: [] },
-          'HTTP_X_API_TOKEN' => @token
-        )
-        @loc.reload
-        expect(response.status).to eq(200)
-      end
-
-      it 'strips out empty emails from array' do
-        put(
-          "api/locations/#{@loc.id}",
-          { emails: [''] },
           'HTTP_X_API_TOKEN' => @token
         )
         @loc.reload

@@ -26,7 +26,7 @@ module Ohana
       get do
         locations = Location.page(params[:page]).per(params[:per_page]).
                             order('created_at DESC')
-        set_link_header(locations)
+        generate_pagination_headers(locations)
         present locations.includes(:organization, :address, :mail_address, :contacts, :phones, :faxes, services: :categories), with: Entities::Location
       end
 
@@ -63,10 +63,6 @@ module Ohana
         authenticate!
         loc = Location.find(params[:id])
         params = request.params.except(:route_info)
-
-        if params[:emails].present?
-          params[:emails] = params[:emails].delete_if { |email| email.blank? }
-        end
 
         loc.update!(params)
         present loc, with: Entities::Location
@@ -109,7 +105,7 @@ module Ohana
               nearby = Location.none.page(params[:page]).per(params[:per_page])
             end
 
-            set_link_header(nearby)
+            generate_pagination_headers(nearby)
             present nearby.includes(:organization, :address, :mail_address, :contacts, :phones, :faxes, services: :categories), with: Entities::Location
           end
         end
@@ -320,7 +316,7 @@ module Ohana
       end
       get do
         orgs = Organization.page(params[:page])
-        set_link_header(orgs)
+        generate_pagination_headers(orgs)
         present orgs, with: Organization::Entity
       end
 
@@ -383,7 +379,7 @@ module Ohana
           get do
             org = Organization.find(params[:organization_id])
             locations = org.locations.page(params[:page])
-            set_link_header(locations)
+            generate_pagination_headers(locations)
             present locations.includes(:organization, :address, :mail_address, :contacts, :phones, :faxes, services: :categories), with: Entities::Location
           end
         end
@@ -507,14 +503,14 @@ module Ohana
             `Peninsula Volunteers`, the search above will only return
             locations that belong to `Peninsula Family Service`.
 
-            ### location, geo, radius
-            Queries that include the `location` or `geo` parameter filter the
+            ### location, lat_lng, radius
+            Queries that include the `location` or `lat_lng` parameter filter the
             results to only include locations that are 5 miles (by default)
-            from the`location` or `geo`.
+            from the `location` or `lat_lng`.
             To search within a radius smaller or greater than 5 miles, use the
             `radius` parameter. `radius` must be a Float between 0.1 and 50.
-            `location` can be an address (full or partial), a 5-digit ZIP code.
-            `geo` must be a comma-delimited lat,long pair of floats.
+            `location` can be an address (full or partial), or a 5-digit ZIP code.
+            `lat_lng` must be a comma-delimited lat,long pair of floats.
             Results are sorted by distance.
 
             Examples:
@@ -523,7 +519,7 @@ module Ohana
 
             `#{ENV['API_BASE_URL']}search?location=san mateo&radius=10`
 
-            `#{ENV['API_BASE_URL']}search?geo=37.7756578,-122.4138115&radius=5`
+            `#{ENV['API_BASE_URL']}search?lat_lng=37.7756578,-122.4138115&radius=5`
 
             `#{ENV['API_BASE_URL']}search?keyword=emergency&location=94403`
 
@@ -587,7 +583,7 @@ module Ohana
       params do
         optional :keyword, type: String
         optional :location, type: String, desc: 'An address or 5-digit ZIP code'
-        optional :geo, type: String, desc: 'A set of geo coordinates in the form lat,lng'
+        optional :lat_lng, type: String, desc: 'A set of geo coordinates in the form lat,lng'
         optional :radius, type: Float, desc: 'Distance in miles from the location parameter'
         optional :language, type: String, desc: 'Languages other than English spoken at the location'
         optional :category, type: String, desc: 'The service category based on the OpenEligibility taxonomy'
@@ -603,7 +599,7 @@ module Ohana
 
         locations = Location.text_search(params).uniq.page(params[:page]).per(params[:per_page])
 
-        set_link_header(locations)
+        generate_pagination_headers(locations)
 
         present locations.includes(tables), with: Entities::Location
       end

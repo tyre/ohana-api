@@ -91,7 +91,7 @@ class Location < ActiveRecord::Base
   # has_many :schedules, dependent: :destroy
   # accepts_nested_attributes_for :schedules
 
-  normalize_attributes :description, :hours, :name,
+  normalize_attributes :description, :emails, :hours, :name,
                        :short_desc, :transportation, :urls
 
   # This is where you define all the fields that you want to be required
@@ -127,7 +127,6 @@ class Location < ActiveRecord::Base
 
   validates :emails, array: {
     format: { with: /.+@.+\..+/i,
-              allow_blank: true,
               message: '%{value} is not a valid email' } }
 
   validate :format_of_admin_email, if: proc { |l| l.admin_emails.is_a?(Array) }
@@ -176,13 +175,20 @@ class Location < ActiveRecord::Base
   scope :has_keyword, ->(k) { keyword_search(k) if k.present? }
   scope :has_category, ->(c) { joins(services: :categories).where(categories: { name: c }) if c.present? }
 
-  scope :is_near, (lambda do |loc, geo, r|
-
-    result = Geocoder.search(loc, bounds: Settings.bounds) if loc.present?
-    coords = result.first.coordinates if result.present?
-    coords = geo.split(",").map{|f| Float(f)} if geo.present?
-
-    near(coords, current_radius(r)) if coords
+  scope :is_near, (lambda do |loc, lat_lng, r|
+    if loc.present?
+      result = Geocoder.search(loc, bounds: Settings.bounds)
+      coords = result.first.coordinates if result.present?
+      near(coords, current_radius(r)) 
+    elsif lat_lng.present?
+      begin
+        coords = lat_lng.split(",").map{ |f| Float(f) }
+      rescue ArgumentError
+        error_msg = 'lat_lng must be a comma-delimited lat,long pair of floats'
+        error!(error_msg, 400)
+      end
+      near(coords, current_radius(r)) 
+    end
   end)
 
   scope :belongs_to_org, (lambda do |org|
@@ -222,7 +228,7 @@ class Location < ActiveRecord::Base
             belongs_to_org(params[:org_name]).
             has_email(params[:email]).
             has_domain(params[:domain]).
-            is_near(params[:location], params[:geo], params[:radius]).
+            is_near(params[:location], params[:lat_lng], params[:radius]).
             has_keyword(params[:keyword])
   end
 
