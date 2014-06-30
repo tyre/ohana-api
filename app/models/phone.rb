@@ -1,4 +1,6 @@
 class Phone < ActiveRecord::Base
+  include ValidationState
+
   default_scope { order('id ASC') }
 
   attr_accessible :department, :extension, :number, :number_type,
@@ -8,7 +10,7 @@ class Phone < ActiveRecord::Base
 
   validates :number,
             presence: { message: "can't be blank for Phone" },
-            phone: { unless: ->(phone) { phone.number == '711' } }
+            phone: { unless: ->(phone) { phone.number == '711' } }, if: :validate?
 
   auto_strip_attributes :department, :extension, :number, :number_type,
                         :vanity_number, squish: true

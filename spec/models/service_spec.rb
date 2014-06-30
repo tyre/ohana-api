@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Service do
-  subject { build(:service) }
+  subject { build(:service).tap { |s| s.validate = true } }
 
   it { is_expected.to be_valid }
 

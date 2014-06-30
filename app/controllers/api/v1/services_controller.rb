@@ -13,13 +13,16 @@ module Api
 
       def update
         service = Service.find(params[:id])
+        service.validate = true
         service.update!(params)
         render json: service, status: 200
       end
 
       def create
         location = Location.find(params[:location_id])
-        service = location.services.create!(params)
+        service = location.services.build(params)
+        service.validate = true
+        service.save!
         render json: service, status: 201
       end
 

@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -81,7 +80,10 @@ CREATE TABLE addresses (
     state text,
     zip text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+    aasm_state_notes text,
+    aasm_state_errors text
 );
 
 
@@ -197,7 +199,10 @@ CREATE TABLE contacts (
     phone text,
     extension text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+    aasm_state_notes text,
+    aasm_state_errors text
 );
 
 
@@ -230,7 +235,10 @@ CREATE TABLE faxes (
     number text,
     department text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+    aasm_state_notes text,
+    aasm_state_errors text
 );
 
 
@@ -307,7 +315,10 @@ CREATE TABLE locations (
     slug text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    tsv_body tsvector
+    tsv_body tsvector,
+    aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+    aasm_state_notes text,
+    aasm_state_errors text
 );
 
 
@@ -343,7 +354,10 @@ CREATE TABLE mail_addresses (
     state text,
     zip text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+    aasm_state_notes text,
+    aasm_state_errors text
 );
 
 
@@ -376,7 +390,10 @@ CREATE TABLE organizations (
     urls text,
     slug text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+    aasm_state_notes text,
+    aasm_state_errors text
 );
 
 
@@ -412,7 +429,10 @@ CREATE TABLE phones (
     vanity_number text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    number_type character varying(255)
+    number_type character varying(255),
+    aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+    aasm_state_notes text,
+    aasm_state_errors text
 );
 
 
@@ -464,7 +484,10 @@ CREATE TABLE services (
     service_areas text,
     keywords text,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+    aasm_state_notes text,
+    aasm_state_errors text
 );
 
 
@@ -720,6 +743,13 @@ CREATE INDEX categories_name ON categories USING gin (to_tsvector('english'::reg
 
 
 --
+-- Name: index_addresses_on_aasm_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_addresses_on_aasm_state ON addresses USING btree (aasm_state);
+
+
+--
 -- Name: index_addresses_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -769,10 +799,24 @@ CREATE UNIQUE INDEX index_categories_services_on_service_id_and_category_id ON c
 
 
 --
+-- Name: index_contacts_on_aasm_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_contacts_on_aasm_state ON contacts USING btree (aasm_state);
+
+
+--
 -- Name: index_contacts_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_contacts_on_location_id ON contacts USING btree (location_id);
+
+
+--
+-- Name: index_faxes_on_aasm_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_faxes_on_aasm_state ON faxes USING btree (aasm_state);
 
 
 --
@@ -804,6 +848,13 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON friendly_id_slugs USIN
 
 
 --
+-- Name: index_locations_on_aasm_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_locations_on_aasm_state ON locations USING btree (aasm_state);
+
+
+--
 -- Name: index_locations_on_latitude_and_longitude; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -832,10 +883,24 @@ CREATE INDEX index_locations_on_tsv_body ON locations USING gin (tsv_body);
 
 
 --
+-- Name: index_mail_addresses_on_aasm_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_mail_addresses_on_aasm_state ON mail_addresses USING btree (aasm_state);
+
+
+--
 -- Name: index_mail_addresses_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_mail_addresses_on_location_id ON mail_addresses USING btree (location_id);
+
+
+--
+-- Name: index_organizations_on_aasm_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_organizations_on_aasm_state ON organizations USING btree (aasm_state);
 
 
 --
@@ -846,10 +911,24 @@ CREATE UNIQUE INDEX index_organizations_on_slug ON organizations USING btree (sl
 
 
 --
+-- Name: index_phones_on_aasm_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_phones_on_aasm_state ON phones USING btree (aasm_state);
+
+
+--
 -- Name: index_phones_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_phones_on_location_id ON phones USING btree (location_id);
+
+
+--
+-- Name: index_services_on_aasm_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_services_on_aasm_state ON services USING btree (aasm_state);
 
 
 --
@@ -990,3 +1069,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140508031024');
 INSERT INTO schema_migrations (version) VALUES ('20140508194831');
 
 INSERT INTO schema_migrations (version) VALUES ('20140522153640');
+
+INSERT INTO schema_migrations (version) VALUES ('20140630002322');
+

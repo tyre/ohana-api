@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Address do
 
-  subject { build(:address) }
+  subject { build(:address).tap { |a| a.validate = true } }
 
   it { is_expected.to be_valid }
 

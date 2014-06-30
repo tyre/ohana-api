@@ -53,6 +53,9 @@ gem 'ancestry'
 
 gem 'friendly_id', '~> 5.0.3'
 
+# State machines
+gem 'aasm'
+
 group :production, :staging do
   # Heroku recommended
   gem 'rails_12factor'

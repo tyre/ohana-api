@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Fax do
-  subject { build(:fax) }
+  subject { build(:fax).tap { |f| f.validate = true } }
 
   it { is_expected.to be_valid }
 

@@ -1,4 +1,6 @@
 class Service < ActiveRecord::Base
+  include ValidationState
+
   attr_accessible :audience, :description, :eligibility, :fees,
                   :funding_sources, :keywords, :how_to_apply, :name,
                   :service_areas, :short_desc, :urls, :wait
@@ -10,10 +12,11 @@ class Service < ActiveRecord::Base
 
   validates :urls, array: {
     format: { with: %r{\Ahttps?://([^\s:@]+:[^\s:@]*@)?[A-Za-z\d\-]+(\.[A-Za-z\d\-]+)+\.?(:\d{1,5})?([\/?]\S*)?\z}i,
-              message: '%{value} is not a valid URL' } }
+              message: '%{value} is not a valid URL' } },
+                   if: :validate?
 
   validate :service_area_format, if: (proc do |s|
-    s.service_areas.is_a?(Array) && SETTINGS[:valid_service_areas].present?
+    s.validate? && s.service_areas.is_a?(Array) && SETTINGS[:valid_service_areas].present?
   end)
 
   auto_strip_attributes :audience, :description, :eligibility, :fees,

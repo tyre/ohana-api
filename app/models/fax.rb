@@ -1,11 +1,16 @@
 class Fax < ActiveRecord::Base
+  include ValidationState
+
+  default_scope { order('id ASC') }
+
   attr_accessible :number, :department
 
   belongs_to :location, touch: true
 
   validates :number,
             presence: { message: "can't be blank for Fax" },
-            fax: true
+            fax: true,
+            if: :validate?
 
   auto_strip_attributes :number, :department, squish: true
 end

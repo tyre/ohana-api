@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Phone do
-  subject { build(:phone) }
+  subject { build(:phone).tap { |p| p.validate = true } }
 
   it { is_expected.to be_valid }
 

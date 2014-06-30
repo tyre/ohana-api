@@ -11,13 +11,16 @@ module Api
 
       def update
         contact = Contact.find(params[:id])
+        contact.validate = true
         contact.update!(params)
         render json: contact, status: 200
       end
 
       def create
         location = Location.find(params[:location_id])
-        contact = location.contacts.create!(params)
+        contact = location.contacts.build(params)
+        contact.validate = true
+        contact.save!
         render json: contact, status: 201
       end
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Contact do
 
-  subject { build(:contact) }
+  subject { build(:contact).tap { |c| c.validate = true } }
 
   it { is_expected.to be_valid }
 

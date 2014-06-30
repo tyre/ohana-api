@@ -11,13 +11,16 @@ module Api
 
       def update
         fax = Fax.find(params[:id])
+        fax.validate = true
         fax.update!(params)
         render json: fax, status: 200
       end
 
       def create
         location = Location.find(params[:location_id])
-        fax = location.faxes.create!(params)
+        fax = location.faxes.build(params)
+        fax.validate = true
+        fax.save!
         render json: fax, status: 201
       end
 
