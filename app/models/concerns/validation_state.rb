@@ -1,6 +1,8 @@
 module ValidationState
   extend ActiveSupport::Concern
 
+  STATES = %w(record_invalid record_valid record_pending record_rejected record_approved)
+
   included do
 
     # Defines validation state machine with help from AASM gem.

@@ -1,0 +1,13 @@
+en:
+  record_invalid: Invalid
+  record_valid: Valid
+  record_pending: Submitted
+  record_approved: Approved
+  record_rejected: Rejected
+  
+  layouts:
+    admin:
+      name: Ohana API Admin
+      toggle_navigation: Toggle navigation
+      search_placeholder: Search...
+      

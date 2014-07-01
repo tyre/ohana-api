@@ -1,0 +1,37 @@
+- content_for :title, Organization.model_name.human.pluralize
+.container-fluid
+  .row
+    .col-sm-3.col-md-2.sidebar
+      %ul.nav.nav-pills.nav-stacked
+        %li{ class: "#{'active' if params[:filter].blank?}"}
+          = link_to admin_organizations_path(params.merge(page: 1).except(:filter)) do
+            = t '.all'
+            %span.badge.pull-right= @counts['all']
+        - ValidationState::STATES.each do |state|
+          %li{ class: "#{'active' if params[:filter] == state}"}
+            = link_to admin_organizations_path(params.merge(filter: state, page: 1)) do
+              = t state
+              %span.badge.pull-right= @counts[state] || 0
+    .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+      %h1.page-header= yield :title
+      .table-responsive
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= t '.status'
+              %th= t '.name'
+              %th= t '.actions'
+          %tbody
+            - @organizations.each do |org|
+              %tr
+                %td
+                  %span.label{ class: "label-#{org.aasm_state.dasherize}" }= t org.aasm_state
+                %td= link_to org.name, admin_organization_path(org)
+                %td
+                  %ul.actions
+                    %li= link_to t('.view'), admin_organization_path(org)
+          %tfoot
+            %tr
+              %td{ colspan: 3 }
+                = paginate @organizations, theme: 'twitter-bootstrap-3'
+                

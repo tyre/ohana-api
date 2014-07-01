@@ -1,0 +1,32 @@
+@import 'bootstrap';
+@import 'dashboard';
+
+.label-record-invalid {
+  @extend .label-danger;
+}
+
+.label-record-valid {
+  @extend .label-primary;
+}
+
+.label-record-pending {
+  @extend .label-warning;
+}
+
+.label-record-rejected {
+  @extend .label-danger;
+}
+
+.label-record-approved {
+  @extend .label-success;
+}
+
+table {
+  ul.actions {
+    list-style-type: none;
+    padding-left: 0;
+    li {
+      display: inline;
+    }
+  }
+}

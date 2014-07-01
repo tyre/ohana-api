@@ -45,6 +45,20 @@ Rails.application.routes.draw do
     get 'docs' => 'api_docs#index'
   end
 
+  namespace :admin do
+    resources :organizations do
+      resources :locations do
+        resources :addresses
+        resources :contacts
+        resources :faxes
+        resources :mail_addresses
+        resources :phones
+        resources :services
+      end
+    end
+    root to: 'dashboard#index'
+  end
+
   root to: 'home#index'
 
   get '.well-known/status' => 'status#check_status'
