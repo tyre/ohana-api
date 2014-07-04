@@ -5,6 +5,18 @@ class AddAasmStateToModels < ActiveRecord::Migration
       add_column table, :aasm_state_notes, :text
       add_column table, :aasm_state_errors, :text
       add_index table, :aasm_state
+      
+      add_column table, :deleted_at, :datetime
+      add_index table, :deleted_at
     end
+    
+    [ Address, Contact, Fax, MailAddress, Organization, Phone, Service, Location ].each do |model_class|
+      puts "Updating validation state for all #{model_class.model_name.human} records..."
+      model_class.find_each do |obj|
+        obj.updated_at = Time.now.utc
+        obj.save!
+      end
+    end
+    
   end
 end

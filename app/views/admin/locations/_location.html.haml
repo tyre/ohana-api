@@ -1,0 +1,40 @@
+%dl.dl-horizontal
+  %dt= Location.human_attribute_name :id
+  %dd= location.id
+  %dt= Location.human_attribute_name :slug
+  %dd= location.slug
+  %dt= Location.human_attribute_name :name
+  %dd= location.name
+  %dt= Location.human_attribute_name :short_desc
+  %dd= location.short_desc
+  %dt= Location.human_attribute_name :description
+  %dd= location.description
+  %dt= Location.human_attribute_name :hours
+  %dd= location.hours
+  %dt= Location.human_attribute_name :transportation
+  %dd= location.transportation
+  %dt= Location.human_attribute_name :urls
+  %dd
+    %ul.list-unstyled
+      - location.urls.each do |url|
+        %li= link_to url, url
+  %dt= Location.human_attribute_name :emails
+  %dd
+    %ul.list-unstyled
+      - location.emails.each do |email|
+        %li= link_to email, "mailto:#{email}"
+  %dt= Location.human_attribute_name :admin_emails
+  %dd
+    %ul.list-unstyled
+      - location.admin_emails.each do |email|
+        %li= link_to email, "mailto:#{email}"
+  %dt= Location.human_attribute_name :languages
+  %dd
+    %ul.list-unstyled
+      - location.languages.each do |lang|
+        %li= t "language.#{lang}"
+  %dt= Location.human_attribute_name :accessibility
+  %dd
+    %ul.list-unstyled
+      - location.accessibility.each do |accessibility|
+        %li= t "accessibility.#{accessibility}"

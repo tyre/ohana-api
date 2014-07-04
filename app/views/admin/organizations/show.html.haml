@@ -1,7 +1,16 @@
 - content_for :title, @organization.name
 .container-fluid
   .row
-    .col-sm-3.col-md-2.sidebar
-      %ul.nav.nav-pills.nav-stacked
-    .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+    .col-sm-12
       %h1.page-header= yield :title
+      = render @organization
+      %h2.sub-header= Location.model_name.human.pluralize
+      - @organization.locations.includes(:services).each do |location|
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title= location.name
+          .panel-body
+            = render location
+          - location.services.each do |service|
+            .panel-heading= service.name
+            .panel-body= render service

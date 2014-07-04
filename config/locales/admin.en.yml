@@ -5,6 +5,14 @@ en:
   record_approved: Approved
   record_rejected: Rejected
   
+  activerecord:
+    attributes:
+      organization:
+        id: ID
+        urls: URLs
+        aasm_state: Validation State
+        aasm_state_notes: Notes
+  
   layouts:
     admin:
       name: Ohana API Admin

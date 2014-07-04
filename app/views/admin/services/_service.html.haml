@@ -1,0 +1,40 @@
+%dl.dl-horizontal
+  %dt= Service.human_attribute_name :id
+  %dd= service.id
+  %dt= Service.human_attribute_name :name
+  %dd= service.name
+  %dt= Service.human_attribute_name :short_desc
+  %dd= service.short_desc
+  %dt= Service.human_attribute_name :description
+  %dd= service.description
+  %dt= Service.human_attribute_name :audience
+  %dd= service.audience
+  %dt= Service.human_attribute_name :eligibility
+  %dd= service.eligibility
+  %dt= Service.human_attribute_name :how_to_apply
+  %dd= service.how_to_apply
+  %dt= Service.human_attribute_name :wait
+  %dd= service.wait
+  %dt= Service.human_attribute_name :fees
+  %dd= service.fees
+  %dt= Service.human_attribute_name :urls
+  %dd
+    %ul.list-unstyled
+      - service.urls.each do |url|
+        %li= link_to url, url
+  %dt= Service.human_attribute_name :funding_sources
+  %dd
+    %ul.list-unstyled
+      - service.funding_sources.each do |source|
+        %li= source
+  %dt= Service.human_attribute_name :keywords
+  %dd
+    %ul.list-unstyled
+      - service.keywords.each do |keyword|
+        %li= keyword
+  %dt= Service.human_attribute_name :service_areas
+  %dd
+    %ul.list-unstyled
+      - service.service_areas.each do |service_area|
+        %li= service_area
+        

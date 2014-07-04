@@ -83,7 +83,8 @@ CREATE TABLE addresses (
     updated_at timestamp without time zone,
     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
     aasm_state_notes text,
-    aasm_state_errors text
+    aasm_state_errors text,
+    deleted_at timestamp without time zone
 );
 
 
@@ -202,7 +203,8 @@ CREATE TABLE contacts (
     updated_at timestamp without time zone,
     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
     aasm_state_notes text,
-    aasm_state_errors text
+    aasm_state_errors text,
+    deleted_at timestamp without time zone
 );
 
 
@@ -238,7 +240,8 @@ CREATE TABLE faxes (
     updated_at timestamp without time zone,
     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
     aasm_state_notes text,
-    aasm_state_errors text
+    aasm_state_errors text,
+    deleted_at timestamp without time zone
 );
 
 
@@ -318,7 +321,8 @@ CREATE TABLE locations (
     tsv_body tsvector,
     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
     aasm_state_notes text,
-    aasm_state_errors text
+    aasm_state_errors text,
+    deleted_at timestamp without time zone
 );
 
 
@@ -357,7 +361,8 @@ CREATE TABLE mail_addresses (
     updated_at timestamp without time zone,
     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
     aasm_state_notes text,
-    aasm_state_errors text
+    aasm_state_errors text,
+    deleted_at timestamp without time zone
 );
 
 
@@ -393,7 +398,8 @@ CREATE TABLE organizations (
     updated_at timestamp without time zone,
     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
     aasm_state_notes text,
-    aasm_state_errors text
+    aasm_state_errors text,
+    deleted_at timestamp without time zone
 );
 
 
@@ -432,7 +438,8 @@ CREATE TABLE phones (
     number_type character varying(255),
     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
     aasm_state_notes text,
-    aasm_state_errors text
+    aasm_state_errors text,
+    deleted_at timestamp without time zone
 );
 
 
@@ -487,7 +494,8 @@ CREATE TABLE services (
     updated_at timestamp without time zone,
     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
     aasm_state_notes text,
-    aasm_state_errors text
+    aasm_state_errors text,
+    deleted_at timestamp without time zone
 );
 
 
@@ -750,6 +758,13 @@ CREATE INDEX index_addresses_on_aasm_state ON addresses USING btree (aasm_state)
 
 
 --
+-- Name: index_addresses_on_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_addresses_on_deleted_at ON addresses USING btree (deleted_at);
+
+
+--
 -- Name: index_addresses_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -806,6 +821,13 @@ CREATE INDEX index_contacts_on_aasm_state ON contacts USING btree (aasm_state);
 
 
 --
+-- Name: index_contacts_on_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_contacts_on_deleted_at ON contacts USING btree (deleted_at);
+
+
+--
 -- Name: index_contacts_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -817,6 +839,13 @@ CREATE INDEX index_contacts_on_location_id ON contacts USING btree (location_id)
 --
 
 CREATE INDEX index_faxes_on_aasm_state ON faxes USING btree (aasm_state);
+
+
+--
+-- Name: index_faxes_on_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_faxes_on_deleted_at ON faxes USING btree (deleted_at);
 
 
 --
@@ -855,6 +884,13 @@ CREATE INDEX index_locations_on_aasm_state ON locations USING btree (aasm_state)
 
 
 --
+-- Name: index_locations_on_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_locations_on_deleted_at ON locations USING btree (deleted_at);
+
+
+--
 -- Name: index_locations_on_latitude_and_longitude; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -890,6 +926,13 @@ CREATE INDEX index_mail_addresses_on_aasm_state ON mail_addresses USING btree (a
 
 
 --
+-- Name: index_mail_addresses_on_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_mail_addresses_on_deleted_at ON mail_addresses USING btree (deleted_at);
+
+
+--
 -- Name: index_mail_addresses_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -901,6 +944,13 @@ CREATE INDEX index_mail_addresses_on_location_id ON mail_addresses USING btree (
 --
 
 CREATE INDEX index_organizations_on_aasm_state ON organizations USING btree (aasm_state);
+
+
+--
+-- Name: index_organizations_on_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_organizations_on_deleted_at ON organizations USING btree (deleted_at);
 
 
 --
@@ -918,6 +968,13 @@ CREATE INDEX index_phones_on_aasm_state ON phones USING btree (aasm_state);
 
 
 --
+-- Name: index_phones_on_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_phones_on_deleted_at ON phones USING btree (deleted_at);
+
+
+--
 -- Name: index_phones_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -929,6 +986,13 @@ CREATE INDEX index_phones_on_location_id ON phones USING btree (location_id);
 --
 
 CREATE INDEX index_services_on_aasm_state ON services USING btree (aasm_state);
+
+
+--
+-- Name: index_services_on_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_services_on_deleted_at ON services USING btree (deleted_at);
 
 
 --
