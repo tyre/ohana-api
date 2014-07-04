@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Location do
 
-  subject { build(:location).tap { |l| l.validate = true } }
+  subject { build(:location) }
 
   it { is_expected.to be_valid }
 
@@ -82,7 +82,7 @@ describe Location do
 
   describe 'invalidations' do
     context 'without an address' do
-      subject { build(:location, address: nil).tap { |l| l.validate = true } }
+      subject { build(:location, address: nil) }
       it { is_expected.not_to be_valid }
     end
   end

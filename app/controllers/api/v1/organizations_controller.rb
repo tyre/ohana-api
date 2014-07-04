@@ -17,14 +17,12 @@ module Api
 
       def update
         org = Organization.find(params[:id])
-        org.validate = true
         org.update!(params)
         render json: org, status: 200
       end
 
       def create
         org = Organization.new(params)
-        org.validate = true
         org.save!
         render json: org, status: 201, location: [:api, org]
       end

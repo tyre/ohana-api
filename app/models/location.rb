@@ -13,27 +13,27 @@ class Location < ActiveRecord::Base
 
   has_one :address, dependent: :destroy
   accepts_nested_attributes_for :address, allow_destroy: true
-  validates_associated :address, if: :validate?
+  validates_associated :address
 
   has_many :contacts, dependent: :destroy
   accepts_nested_attributes_for :contacts
-  validates_associated :contacts, if: :validate?
+  validates_associated :contacts
 
   has_many :faxes, dependent: :destroy
   accepts_nested_attributes_for :faxes
-  validates_associated :faxes, if: :validate?
+  validates_associated :faxes
 
   has_one :mail_address, dependent: :destroy
   accepts_nested_attributes_for :mail_address, allow_destroy: true
-  validates_associated :mail_address, if: :validate?
+  validates_associated :mail_address
 
   has_many :phones, dependent: :destroy
   accepts_nested_attributes_for :phones
-  validates_associated :phones, if: :validate?
+  validates_associated :phones
 
   has_many :services, dependent: :destroy
   accepts_nested_attributes_for :services
-  validates_associated :services, if: :validate?
+  validates_associated :services
 
   # has_many :schedules, dependent: :destroy
   # accepts_nested_attributes_for :schedules
@@ -42,17 +42,16 @@ class Location < ActiveRecord::Base
             presence: {
               message: 'A location must have at least one address type.'
             },
-            unless: proc { |loc| loc.address.present? || !loc.validate? }
+            unless: proc { |loc| loc.address.present? }
 
   validates :address,
             presence: {
               message: 'A location must have at least one address type.'
             },
-            unless: proc { |loc| loc.mail_address.present? || !loc.validate? }
+            unless: proc { |loc| loc.mail_address.present? }
 
   validates :description, :organization, :name,
-            presence: { message: "can't be blank for Location" },
-            if: :validate?
+            presence: { message: "can't be blank for Location" }
 
   ## Uncomment the line below if you want to require a short description.
   ## We recommend having a short description so that web clients can display
@@ -74,13 +73,11 @@ class Location < ActiveRecord::Base
   # custom array validator. See app/validators/array_validator.rb
   validates :urls, array: {
     format: { with: %r{\Ahttps?://([^\s:@]+:[^\s:@]*@)?[A-Za-z\d\-]+(\.[A-Za-z\d\-]+)+\.?(:\d{1,5})?([\/?]\S*)?\z}i,
-              message: '%{value} is not a valid URL' } },
-                   if: :validate?
+              message: '%{value} is not a valid URL' } }
 
   validates :emails, :admin_emails, array: {
     format: { with: /\A([^@\s]+)@((?:(?!-)[-a-z0-9]+(?<!-)\.)+[a-z]{2,})\z/i,
-              message: '%{value} is not a valid email' } },
-                                    if: :validate?
+              message: '%{value} is not a valid email' } }
 
   # Only call Google's geocoding service if the address has changed
   # to avoid unnecessary requests that affect our rate limit.

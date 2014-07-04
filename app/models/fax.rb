@@ -9,8 +9,7 @@ class Fax < ActiveRecord::Base
 
   validates :number,
             presence: { message: "can't be blank for Fax" },
-            fax: true,
-            if: :validate?
+            fax: true
 
   auto_strip_attributes :number, :department, squish: true
 end

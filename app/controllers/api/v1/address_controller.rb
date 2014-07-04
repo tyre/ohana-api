@@ -5,7 +5,6 @@ module Api
 
       def update
         address = Address.find(params[:id])
-        address.validate = true
         address.update!(params)
         render json: address, status: 200
       end
@@ -14,7 +13,6 @@ module Api
         location = Location.find(params[:location_id])
         unless location.address.present?
           address = location.build_address(params)
-          address.validate = true
           address.save!
         end
         render json: address, status: 201
@@ -22,7 +20,6 @@ module Api
 
       def destroy
         location = Location.find(params[:location_id])
-        location.validate = true
         address_id = location.address.id
         location.address_attributes = { id: address_id, _destroy: '1' }
         location.save!

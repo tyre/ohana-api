@@ -20,14 +20,12 @@ module Api
 
       def update
         location = Location.find(params[:id])
-        location.validate = true
         location.update!(params)
         render json: location, status: 200
       end
 
       def create
         location = Location.new(params)
-        location.validate = true
         location.save!
         response_hash = {
           id: location.id,

@@ -10,13 +10,16 @@ class AddAasmStateToModels < ActiveRecord::Migration
       add_index table, :deleted_at
     end
     
-    [ Address, Contact, Fax, MailAddress, Organization, Phone, Service, Location ].each do |model_class|
-      puts "Updating validation state for all #{model_class.model_name.human} records..."
-      model_class.find_each do |obj|
-        obj.updated_at = Time.now.utc
-        obj.save!
+    reversible do |dir|
+      dir.up do
+        [ Address, Contact, Fax, MailAddress, Phone, Service, Location, Organization ].each do |model_class|
+          puts "Updating validation state for all #{model_class.model_name.human} records..."
+          model_class.find_each do |obj|
+            obj.updated_at = Time.now.utc
+            obj.save!(validate: false)
+          end
+        end
       end
-    end
-    
+    end    
   end
 end

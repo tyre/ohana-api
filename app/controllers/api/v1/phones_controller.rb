@@ -11,7 +11,6 @@ module Api
 
       def update
         phone = Phone.find(params[:id])
-        phone.validate = true
         phone.update!(params)
         render json: phone, status: 200
       end
@@ -19,7 +18,6 @@ module Api
       def create
         location = Location.find(params[:location_id])
         phone = location.phones.build(params)
-        phone.validate = true
         phone.save!
         render json: phone, status: 201
       end

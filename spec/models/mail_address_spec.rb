@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe MailAddress do
 
-  subject { build(:mail_address).tap { |ma| ma.validate = true } }
+  subject { build(:mail_address) }
 
   it { is_expected.to be_valid }
 

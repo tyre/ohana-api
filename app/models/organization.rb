@@ -7,9 +7,9 @@ class Organization < ActiveRecord::Base
 
   has_many :locations, dependent: :destroy
   # accepts_nested_attributes_for :locations
-  validates_associated :locations, if: :validate?
+  validates_associated :locations
 
-  validates :name, presence: { message: "can't be blank for Organization" }, if: :validate?
+  validates :name, presence: { message: "can't be blank for Organization" }
 
   # Custom validation for values within arrays.
   # For example, the urls field is an array that can contain multiple URLs.
@@ -17,8 +17,7 @@ class Organization < ActiveRecord::Base
   # custom array validator. See app/validators/array_validator.rb
   validates :urls, array: {
     format: { with: %r{\Ahttps?://([^\s:@]+:[^\s:@]*@)?[A-Za-z\d\-]+(\.[A-Za-z\d\-]+)+\.?(:\d{1,5})?([\/?]\S*)?\z}i,
-              message: '%{value} is not a valid URL' } },
-                   if: :validate?
+              message: '%{value} is not a valid URL' } }
 
   serialize :urls, Array
 

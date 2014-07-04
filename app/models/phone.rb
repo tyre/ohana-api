@@ -10,7 +10,7 @@ class Phone < ActiveRecord::Base
 
   validates :number,
             presence: { message: "can't be blank for Phone" },
-            phone: { unless: ->(phone) { phone.number == '711' } }, if: :validate?
+            phone: { unless: ->(phone) { phone.number == '711' } }
 
   auto_strip_attributes :department, :extension, :number, :number_type,
                         :vanity_number, squish: true

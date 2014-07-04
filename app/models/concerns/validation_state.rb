@@ -52,18 +52,11 @@ module ValidationState
       end
     end
 
-    # Defines a conditional state for running validations.
-    attr_writer :validate
-    def validate?
-      !!@validate # rubocop:disable DoubleNegation
-    end
-
     # Requires notes to be submitted when transitioning to certain states
     validates :aasm_state_notes, presence: true, if: :record_rejected?
 
     # Save hook to change state as validation state changes
     before_save do
-      self.validate = true
       if self.valid?
         validate_record if self.may_validate_record?
         self.aasm_state_errors = nil
@@ -71,8 +64,6 @@ module ValidationState
         invalidate_record
         self.aasm_state_errors = errors.to_json
       end
-      self.validate = false
-      true
     end
 
   end

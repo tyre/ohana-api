@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Organization do
 
-  subject { build(:organization).tap { |o| o.validate = true } }
+  subject { build(:organization) }
 
   it { is_expected.to be_valid }
 
