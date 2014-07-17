@@ -1,4 +1,4 @@
-module Admin
+module Sfadmin
   class AdminController < ApplicationController
     layout 'admin'
 

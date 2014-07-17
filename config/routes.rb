@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     get 'docs' => 'api_docs#index'
   end
 
-  namespace :admin do
+  namespace :sfadmin do
     resources :organizations do
       resources :locations do
         resources :addresses

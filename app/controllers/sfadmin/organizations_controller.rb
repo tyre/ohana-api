@@ -1,5 +1,5 @@
-module Admin
-  class OrganizationsController < Admin::AdminController
+module Sfadmin
+  class OrganizationsController < Sfadmin::AdminController
     before_action :load_organization, except: [:index]
 
     def index
