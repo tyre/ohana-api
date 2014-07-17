@@ -10,17 +10,20 @@ class Location < ActiveRecord::Base
                   :services_attributes, :organization_id
 
   belongs_to :organization
+  accepts_nested_attributes_for :organization
 
   has_one :address, dependent: :destroy
   accepts_nested_attributes_for :address, allow_destroy: true
   validates_associated :address
 
   has_many :contacts, dependent: :destroy
-  accepts_nested_attributes_for :contacts
+  accepts_nested_attributes_for :contacts,
+                                allow_destroy: true, reject_if: :all_blank
   validates_associated :contacts
 
   has_many :faxes, dependent: :destroy
-  accepts_nested_attributes_for :faxes
+  accepts_nested_attributes_for :faxes,
+                                allow_destroy: true, reject_if: :all_blank
   validates_associated :faxes
 
   has_one :mail_address, dependent: :destroy
@@ -28,11 +31,12 @@ class Location < ActiveRecord::Base
   validates_associated :mail_address
 
   has_many :phones, dependent: :destroy
-  accepts_nested_attributes_for :phones
+  accepts_nested_attributes_for :phones,
+                                allow_destroy: true, reject_if: :all_blank
   validates_associated :phones
 
   has_many :services, dependent: :destroy
-  accepts_nested_attributes_for :services
+  accepts_nested_attributes_for :services, allow_destroy: true
   validates_associated :services
 
   # has_many :schedules, dependent: :destroy
@@ -73,11 +77,11 @@ class Location < ActiveRecord::Base
   # custom array validator. See app/validators/array_validator.rb
   validates :urls, array: {
     format: { with: %r{\Ahttps?://([^\s:@]+:[^\s:@]*@)?[A-Za-z\d\-]+(\.[A-Za-z\d\-]+)+\.?(:\d{1,5})?([\/?]\S*)?\z}i,
-              message: '%{value} is not a valid URL' } }
+              message: '%{value} is not a valid URL', allow_blank: true } }
 
   validates :emails, :admin_emails, array: {
     format: { with: /\A([^@\s]+)@((?:(?!-)[-a-z0-9]+(?<!-)\.)+[a-z]{2,})\z/i,
-              message: '%{value} is not a valid email' } }
+              message: '%{value} is not a valid email', allow_blank: true } }
 
   # Only call Google's geocoding service if the address has changed
   # to avoid unnecessary requests that affect our rate limit.
@@ -113,7 +117,10 @@ class Location < ActiveRecord::Base
   serialize :urls, Array
 
   auto_strip_attributes :description, :hours, :name, :short_desc,
-                        :transportation, squish: true
+                        :transportation
+
+  auto_strip_attributes :admin_emails, :emails, :urls,
+                        reject_blank: true, nullify: false
 
   extend FriendlyId
   friendly_id :slug_candidates, use: [:history]

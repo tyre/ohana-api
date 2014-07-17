@@ -14,7 +14,7 @@ en:
         aasm_state_notes: Notes
   
   layouts:
-    admin:
+    sfadmin:
       name: Ohana API Admin
       toggle_navigation: Toggle navigation
       search_placeholder: Search...

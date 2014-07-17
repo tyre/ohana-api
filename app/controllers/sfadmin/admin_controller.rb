@@ -1,6 +1,6 @@
 module Sfadmin
   class AdminController < ApplicationController
-    layout 'admin'
+    layout 'sfadmin'
 
     before_action :authenticate_user!
   end
