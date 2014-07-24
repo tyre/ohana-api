@@ -15,6 +15,7 @@ gem 'bootstrap-kaminari-views'
 gem 'protected_attributes'
 # gem 'rails-observers'
 # gem 'rails-perftest'
+gem 'validates_formatting_of'
 
 # Front end
 gem 'jquery-rails'
