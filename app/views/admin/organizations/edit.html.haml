@@ -1,5 +1,6 @@
 %div.content-box
   %h2= @organization.name
 = form_for [:admin, @organization], html: { class: 'edit_entry' } do |f|
+  = aasm_validation_errors_for(f.object)
   = render 'admin/organizations/form', f: f
 

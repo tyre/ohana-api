@@ -33,5 +33,22 @@ class Admin
         end
       end.join.html_safe
     end
+
+    def service_has_aasm_error_for(key)
+      ' error' if JSON.parse(@service.aasm_state_errors).keys.include?(key)
+    end
+
+    def aasm_validation_errors_for(obj)
+      errors = JSON.parse(obj.aasm_state_errors)
+      unless errors.keys.empty?
+        content_tag :div, class: "alert alert-danger", role: "alert" do
+          errors.keys.each do |error_key|
+            errors[error_key].uniq.collect do |error_msg|
+              concat content_tag(:div, "#{error_key} #{error_msg}")
+            end
+          end
+        end
+      end
+    end
   end
 end

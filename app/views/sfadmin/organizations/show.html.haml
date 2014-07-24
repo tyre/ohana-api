@@ -2,15 +2,23 @@
 .container-fluid
   .row
     .col-sm-12
-      %h1.page-header= yield :title
+      %h1.page-header
+        = yield :title
+        = link_to '(edit)', edit_admin_organization_path(@organization.slug)
+      = aasm_validation_errors_for(@organization)
       = render @organization
       %h2.sub-header= Location.model_name.human.pluralize
       - @organization.locations.includes(:services).each do |location|
         .panel.panel-default
           .panel-heading
-            %h3.panel-title= location.name
+            %h3.panel-title
+              = location.name
+              = link_to '(edit)', edit_admin_location_path(location.slug)
           .panel-body
+            = aasm_validation_errors_for(location)
             = render location
           - location.services.each do |service|
             .panel-heading= service.name
-            .panel-body= render service
+            .panel-body
+              = aasm_validation_errors_for(service)
+              = render service

@@ -1,5 +1,6 @@
 %div.content-box
   %h2= @location.name == @org.try(:name) ? @location.name : "#{@org.try(:name)} / #{@location.name}"
 = form_for [:admin, @location], html: { class: 'edit_entry' } do |f|
+  = aasm_validation_errors_for(f.object)
   = render 'form', f: f
 
