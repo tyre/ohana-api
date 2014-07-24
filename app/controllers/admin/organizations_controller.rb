@@ -6,7 +6,6 @@ class Admin
     def index
       @admin_decorator = AdminDecorator.new(current_admin)
       @orgs = Kaminari.paginate_array(@admin_decorator.orgs).page(params[:page])
-      Rails.logger.debug @orgs.size
     end
 
     def edit
