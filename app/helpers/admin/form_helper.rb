@@ -35,11 +35,11 @@ class Admin
     end
 
     def service_has_aasm_error_for(key)
-      ' error' if JSON.parse(@service.aasm_state_errors).keys.include?(key)
+      ' error' if @service.aasm_state_errors && JSON.parse(@service.aasm_state_errors).keys.include?(key)
     end
 
     def aasm_validation_errors_for(obj)
-      errors = JSON.parse(obj.aasm_state_errors)
+      errors = obj.aasm_state_errors.nil? ? {} : JSON.parse(obj.aasm_state_errors)
       unless errors.keys.empty?
         content_tag :div, class: "alert alert-danger", role: "alert" do
           errors.keys.each do |error_key|
