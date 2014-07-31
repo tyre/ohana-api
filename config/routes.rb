@@ -76,6 +76,7 @@ Rails.application.routes.draw do
         resources :services
       end
     end
+    resources :import_jobs
     root to: 'dashboard#index'
   end
 
