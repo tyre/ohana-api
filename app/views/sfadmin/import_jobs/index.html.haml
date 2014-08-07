@@ -1,0 +1,5 @@
+%h1 Import Jobs
+=link_to t('new_import_job'), new_sfadmin_import_job_path
+%ul
+	-@import_jobs.each do |j|
+		%li=j.url

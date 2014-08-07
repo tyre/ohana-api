@@ -1,0 +1,5 @@
+%h1 New Import Job
+=form_for [:sfadmin, @import_job] do |f|
+	=f.label :url
+	=f.text_field :url
+	=f.submit
