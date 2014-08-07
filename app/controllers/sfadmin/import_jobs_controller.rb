@@ -9,7 +9,7 @@ module Sfadmin
     end
 
     def create
-    	@import_job = current_admin.import_jobs.build params[:import_job]
+    	@import_job = current_admin.import_jobs.build import_job_params
     	if @import_job.save
     		redirect_to sfadmin_import_jobs_path
     	else
@@ -32,5 +32,12 @@ module Sfadmin
     def destroy
 
     end
+    
+    private
+    
+    def import_job_params
+      params.require(:import_job).permit(:url)
+    end
+    
   end
 end
