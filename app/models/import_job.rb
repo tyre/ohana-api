@@ -3,6 +3,6 @@ class ImportJob < ActiveRecord::Base
   
   attr_accessible :url
   
-  validates :url, presence: true
+  validates :url, presence: true, format: { with: /\A(http|https):\/\// }
 	
 end

@@ -1,5 +1,8 @@
-%h1 Import Jobs
-=link_to t('new_import_job'), new_sfadmin_import_job_path
-%ul
-	-@import_jobs.each do |j|
-		%li=j.url
+.container
+  .row
+    .col-md-12
+      %h1 Import Jobs
+      = link_to t('new_import_job'), new_sfadmin_import_job_path, class: 'btn btn-primary'
+      %ul
+        - @import_jobs.each do |j|
+          %li= j.url

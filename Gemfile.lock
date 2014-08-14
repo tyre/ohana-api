@@ -47,6 +47,7 @@ GEM
       rails (>= 3.1)
     bootstrap-sass (3.2.0.0)
       sass (~> 3.2)
+    bootstrap_form (2.1.1)
     builder (3.2.2)
     bullet (4.12.0)
       activesupport (>= 3.0.0)
@@ -271,6 +272,7 @@ DEPENDENCIES
   binding_of_caller (>= 0.7.1)
   bootstrap-kaminari-views
   bootstrap-sass
+  bootstrap_form
   bullet
   capybara
   coffee-rails (~> 4.0.0)
