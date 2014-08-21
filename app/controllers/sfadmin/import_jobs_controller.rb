@@ -1,7 +1,15 @@
 module Sfadmin
   class ImportJobsController < Sfadmin::AdminController
+    
+    before_action :load_import_job, only: [ :show, :destroy ]
+    
     def index
-    	@import_jobs = current_admin.import_jobs
+    	@import_jobs = current_admin.import_jobs.order('created_at DESC')
+      
+      respond_to do |format|
+        format.json { render json: @import_jobs }
+        format.html
+      end
     end
 
     def new
@@ -21,14 +29,6 @@ module Sfadmin
 
     end
 
-    def edit
-
-    end
-
-    def update
-
-    end
-
     def destroy
 
     end
@@ -37,6 +37,10 @@ module Sfadmin
     
     def import_job_params
       params.require(:import_job).permit(:url)
+    end
+    
+    def load_import_job
+      @import_job = current_admin.import_jobs.find_by id: params[:id]
     end
     
   end

@@ -1,0 +1,18 @@
+- content_for :title, ImportJob.model_name.human
+
+.container
+  .row
+    .col-md-12
+      %h1.page-header= yield :title
+      %dl
+        %dt= ImportJob.human_attribute_name :created_at
+        %dd= l @import_job.created_at
+        %dt= ImportJob.human_attribute_name :aasm_state
+        %dd= @import_job.aasm_state
+        %dt= ImportJob.human_attribute_name :url
+        %dd= @import_job.url
+      %table.table.table-striped.table-bordered
+        - @import_job.organizations.reorder('created_at ASC').each do |organization|
+          %tr
+            %td= organization.aasm_state
+            %td= link_to organization.name, [ :sfadmin, organization ]

@@ -14,6 +14,8 @@ SETTINGS.symbolize_keys!
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require 'open-uri'
+
 module OhanaApi
   class Application < Rails::Application
     # don't generate RSpec tests for views and helpers

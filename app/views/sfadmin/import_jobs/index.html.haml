@@ -2,7 +2,15 @@
   .row
     .col-md-12
       %h1 Import Jobs
-      = link_to t('new_import_job'), new_sfadmin_import_job_path, class: 'btn btn-primary'
-      %ul
-        - @import_jobs.each do |j|
-          %li= j.url
+      %p= link_to t('new_import_job'), new_sfadmin_import_job_path, class: 'btn btn-primary'
+      %table.table.table-striped.table-bordered
+        %tr
+          %th= ImportJob.human_attribute_name :created_at
+          %th= ImportJob.human_attribute_name :aasm_state
+          %th= ImportJob.human_attribute_name :url
+        - @import_jobs.each do |import_job|
+          %tr
+            %td= l import_job.created_at
+            %td= link_to import_job.aasm_state, [ :sfadmin, import_job ]
+            %td= import_job.url
+            

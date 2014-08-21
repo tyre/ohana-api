@@ -58,6 +58,9 @@ gem 'friendly_id', '~> 5.0.3'
 # State machines
 gem 'aasm'
 
+# Job queuing
+gem 'delayed_job_active_record'
+
 group :production, :staging do
   # Heroku recommended
   gem 'rails_12factor'

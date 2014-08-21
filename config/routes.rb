@@ -76,7 +76,7 @@ Rails.application.routes.draw do
         resources :services
       end
     end
-    resources :import_jobs
+    resources :import_jobs, except: [ :edit, :update ]
     root to: 'dashboard#index'
   end
 
