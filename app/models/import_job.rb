@@ -37,13 +37,31 @@ class ImportJob < ActiveRecord::Base
       if firstchar == '['
         data = tempfile.read
         records = JSON.parse(data)
+        i = 0
+        log = []
         records.each do |record|
-          save_record(record)
+          begin
+            org, rejected = save_record(record)
+            log << { index: i, id: org.id, organization: rejected }
+          rescue
+            log << { index: i, error: $!.to_s }
+          end
+          self.update_column :log, log.to_json
+          i += 1
         end
       else
+        i = 0
+        log = []
         tempfile.each do |line|
-          record = JSON.parse(line)
-          save_record(record)
+          begin
+            record = JSON.parse(line)
+            org, rejected = save_record(record)
+            log << { index: i, id: org.id, organization: rejected }
+          rescue
+            log << { index: i, error: $!.to_s }
+          end
+          self.update_column :log, log.to_json
+          i += 1
         end
       end
     rescue
@@ -60,22 +78,60 @@ class ImportJob < ActiveRecord::Base
   handle_asynchronously :perform
   
   def save_record(record)
-    params = record.except('locations')
-    org = Organization.new params
-    sanitized = org.send :sanitize_for_mass_assignment, params
-    rejected = []
-    params.each do |k, v|
-      rejected << k unless sanitized.has_key?(k)
-    end
-    puts rejected.inspect
-    if org.save(validate: false)
-      locs = record['locations']
-      locs.each do |location|
-        location = Location.new(location.merge(organization_id: org.id))
-        location.save(validate: false)
-        sleep 0.2 # to prevent Geocoder rate limit exception
-      end unless locs.nil?
-      organizations << org
+    Organization.transaction do
+      params = record.except('locations')
+      org = Organization.new params
+      # look for rejected params in Organization
+      sanitized = org.send :sanitize_for_mass_assignment, params
+      rejected = { rejected: [] }
+      params.each do |k, v|
+        rejected[:rejected] << k unless sanitized.has_key?(k)
+      end
+      if org.save(validate: false)
+        rejected[:locations] = []
+        locs = record['locations']
+        locs.each do |location|
+          params = location.merge(organization_id: org.id)
+          location = Location.new(params)
+          # look for rejected params in Location
+          sanitized = location.send :sanitize_for_mass_assignment, params
+          keys = []
+          params.each do |k, v|
+             keys << k unless sanitized.has_key?(k)
+          end        
+          rejected[:locations] << { }
+          rejected[:locations].last[:rejected] = keys unless keys.empty?
+          [ :address, :contacts, :faxes, :mail_address, :phones, :services ].each do |klass|
+            key = "#{klass}_attributes"
+            if params[key]
+              if params[key].kind_of?(Hash)
+                obj = klass.to_s.singularize.classify.constantize.new
+                sanitized = obj.send :sanitize_for_mass_assignment, params[key]
+                keys = []
+                params[key].each do |k, v|
+                   keys << k unless sanitized.has_key?(k)
+                end
+                rejected[:locations].last[key] = { rejected: keys } unless keys.empty?
+              elsif params[key].kind_of?(Array)
+                obj = klass.to_s.singularize.classify.constantize.new
+                keys = []
+                params[key].each do |data|
+                  sanitized = obj.send :sanitize_for_mass_assignment, data
+                  data.each do |k, v|
+                     keys << k unless sanitized.has_key?(k) || keys.include?(k)
+                  end
+                end
+                rejected[:locations].last[key] = { rejected: keys } unless keys.empty?
+              end            
+            end
+          end
+          location.save(validate: false)
+          rejected[:locations].last[:id] = location.id unless location.id.blank?
+          sleep 0.2 # to prevent Geocoder rate limit exception
+        end unless locs.nil?
+        organizations << org
+      end
+      return org, rejected
     end
   end
 	
