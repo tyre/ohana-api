@@ -19,7 +19,7 @@ module Sfadmin
     def create
     	@import_job = current_admin.import_jobs.build import_job_params
     	if @import_job.save
-    		redirect_to sfadmin_import_jobs_path
+    		redirect_to [ :sfadmin, @import_job ]
     	else
     		render :new
     	end

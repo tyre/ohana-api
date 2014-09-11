@@ -41,13 +41,16 @@
             %td{ colspan: 2 }
               %b= t '.error'
               = log['error']
-  - if @import_job.started_job?
-    %tr
-      %td{ colspan: 3 }
-        = image_tag 'ajax-loader.gif'
-        :coffee
-          console.log window.location.href
-          setTimeout ->
-            $('#log').load window.location.href
-          , 2000
-            
+    - if @import_job.new_job? || @import_job.started_job?
+      %tr
+        %td{ colspan: 3 }
+          = image_tag 'ajax-loader.gif'
+          :coffee
+            console.log window.location.href
+            setTimeout ->
+              $('#log').load window.location.href, ->
+                scrollTop = $(document).height() - $(window).height()
+                $('html,body').animate
+                  scrollTop: scrollTop
+                , 500
+            , 2000
