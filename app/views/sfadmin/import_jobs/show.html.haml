@@ -13,6 +13,5 @@
         %dd= @import_job.url
       - if @import_job.finished_job?
         %p= link_to t('.delete'), [ :sfadmin, @import_job ], class: 'btn btn-danger', method: :delete, data: { confirm: t('.confirm_delete') }
-      - if @import_job.log && !@import_job.deleted_job?
+      - if !@import_job.deleted_job?
         = render partial: 'log'
-        

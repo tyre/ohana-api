@@ -26,7 +26,7 @@ module Sfadmin
     end
 
     def show
-
+      render partial: 'log' if request.xhr?
     end
 
     def destroy
