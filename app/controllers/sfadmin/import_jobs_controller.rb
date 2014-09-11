@@ -30,7 +30,8 @@ module Sfadmin
     end
 
     def destroy
-
+      @import_job.delete_job!
+      redirect_to [ :sfadmin, @import_job ]
     end
     
     private

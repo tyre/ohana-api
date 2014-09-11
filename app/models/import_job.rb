@@ -5,12 +5,19 @@ class ImportJob < ActiveRecord::Base
     state :new_job, initial: true
     state :started_job
     state :finished_job
+    state :deleted_job
     
     event :start_job do
       transitions from: :new_job, to: :started_job
     end
     event :finish_job do
       transitions from: :started_job, to: :finished_job
+    end
+    event :delete_job do
+      after do
+        cascade_delete
+      end
+      transitions from: :finished_job, to: :deleted_job
     end
   end
     
@@ -134,5 +141,12 @@ class ImportJob < ActiveRecord::Base
       return org, rejected
     end
   end
+  
+  def cascade_delete
+    self.organizations.each do |org|
+      org.destroy
+    end
+  end
+  handle_asynchronously :cascade_delete
 	
 end
