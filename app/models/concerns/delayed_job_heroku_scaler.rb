@@ -16,7 +16,7 @@ module DelayedJobHerokuScaler
     def after(job)
       if Rails.env.production?
         job_count = ::Delayed::Job.where(failed_at: nil).count
-        if job_count == 0
+        if job_count == 1 # check for 1 because includes this job
           heroku = PlatformAPI.connect_oauth ENV['HEROKU_OAUTH_TOKEN']
           worker_info = heroku.formation.info('sf-ohana', 'worker')
           heroku.formation.update(ENV['HEROKU_APP_NAME'], 'worker', { quantity: 0 })
