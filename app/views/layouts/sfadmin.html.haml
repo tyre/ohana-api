@@ -25,6 +25,7 @@
             %li= link_to t('.dashboard'), sfadmin_root_path
             %li= link_to t('.browse'), sfadmin_organizations_path
             %li= link_to t('.import'), sfadmin_import_jobs_path
+            %li= link_to t('.sign_out'), destroy_admin_session_path, :method=>'delete'
     = yield
     .container-fluid
       .content
