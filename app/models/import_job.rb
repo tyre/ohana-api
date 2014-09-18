@@ -1,5 +1,6 @@
 class ImportJob < ActiveRecord::Base
   include AASM
+  include DelayedJobHerokuScaler
 
   aasm do
     state :new_job, initial: true

@@ -60,6 +60,8 @@ gem 'aasm'
 
 # Job queuing
 gem 'delayed_job_active_record'
+# Heroku platform api, used for auto-scaling background job workers
+gem 'platform-api'
 
 group :production, :staging do
   # Heroku recommended
