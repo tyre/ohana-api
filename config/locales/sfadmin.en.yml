@@ -5,8 +5,17 @@ en:
   record_approved: Approved
   record_rejected: Rejected
   
+  finished_job: Finished
+  deleted_job: Deleted
+  new_job: New
+  started_job: Started
+  
   activerecord:
     attributes:
+      import_job:
+        aasm_state: Job State
+        created_at: Started at
+        url: Source Data URL
       organization:
         id: ID
         urls: URLs
@@ -14,8 +23,20 @@ en:
         aasm_state_notes: Notes
   
   layouts:
-    sfadmin:
-      name: Ohana API Admin
+    application:
+      name: San Francisco Open Referral Database
       toggle_navigation: Toggle navigation
       search_placeholder: Search...
+      dashboard: Dashboard
+      browse: Browse
+      import: Import Data
+      sign_out: Sign out
+    
+  sfadmin:
+    import_jobs:
+      index:
+        title: Import Data
+      show:
+        delete: Delete all imported records
+        confirm_delete: Are you sure you wish to delete all the imported records from this job?
       

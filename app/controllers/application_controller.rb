@@ -20,13 +20,11 @@ class ApplicationController < ActionController::Base
     return root_url if resource.is_a?(User)
     return sfadmin_root_path if resource.is_a?(Admin)
   end
-  
+    
   def after_sign_out_path_for(resource)
     return root_path if resource == :user
     return sfadmin_root_path if resource == :admin
   end
-  
-  layout :layout_by_resource
 
   private
 
@@ -56,13 +54,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << :name
   end
 
-  def layout_by_resource
-    if devise_controller? && resource_name == :user
-      'application'
-    elsif devise_controller? && resource_name == :admin
-      'admin'
-    else
-      'application'
-    end
-  end
 end

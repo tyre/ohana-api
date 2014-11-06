@@ -1,8 +1,12 @@
+- content_for :title, t('.title')
 .container
   .row
     .col-md-12
-      %h1 Import Jobs
-      %p= link_to t('new_import_job'), new_sfadmin_import_job_path, class: 'btn btn-primary'
+      %h1.page-header
+        = yield :title
+      %p
+        = link_to new_sfadmin_import_job_path, class: 'btn btn-primary btn-lg' do
+          = t('.new_import_job')
       %table.table.table-striped.table-bordered
         %tr
           %th= ImportJob.human_attribute_name :created_at
@@ -10,7 +14,9 @@
           %th= ImportJob.human_attribute_name :url
         - @import_jobs.each do |import_job|
           %tr
-            %td= l import_job.created_at
-            %td= link_to import_job.aasm_state, [ :sfadmin, import_job ]
+            %td= l import_job.created_at, format: :short
+            %td
+              = link_to [ :sfadmin, import_job ] do
+                %span.label{ class: "label-#{import_job.aasm_state.dasherize}" }= t import_job.aasm_state                
             %td= import_job.url
             

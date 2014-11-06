@@ -1,7 +1,8 @@
 class HomeController < ApplicationController
-  # If the user is signed in, we'd like to greet
-  # them on the Home page
+
   def index
-    @user = current_user
+    # for now, just redirect to our own admin interface
+    redirect_to sfadmin_root_path
   end
+  
 end

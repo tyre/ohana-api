@@ -38,13 +38,3 @@ en:
     brand: "Ohana API"
     main: "%{brand} Admin"
     welcome: "Welcome to %{brand} Admin!"
-    
-  sfadmin:
-    import_jobs:
-      show:
-        delete: Delete all imported records
-        confirm_delete: Are you sure you wish to delete all the imported records from this job?
-
-
-
-

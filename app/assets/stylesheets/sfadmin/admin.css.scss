@@ -2,6 +2,26 @@
 @import 'rails_bootstrap_forms';
 @import 'dashboard';
 
+body {
+  padding-top: 60px;
+}
+
+.label-finished-job {
+  @extend .label-success;
+}
+
+.label-deleted-job {
+  @extend .label-danger;
+}
+
+.label-new-job {
+  @extend .label-primary;
+}
+
+.label-started-job {
+  @extend .label-warning;
+}
+
 .label-record-invalid {
   @extend .label-danger;
 }
