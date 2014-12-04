@@ -43,7 +43,9 @@
       - location.accessibility.each do |accessibility|
         %li= t "accessibility.#{accessibility}"
   %dt= Location.human_attribute_name :address
-  %dd= render partial: 'sfadmin/addresses/address', locals: { address: location.address }
+  %dd
+    - if location.address
+      = render partial: 'sfadmin/addresses/address', locals: { address: location.address }
   %dt= Location.human_attribute_name :contacts
   %dd
     %ul
