@@ -1,10 +1,15 @@
-%p
-  #{contact.name}
-  %br
-  #{contact.title}
-  %br
-  %a{ href: "mailto:#{contact.email}" } #{contact.email}
-  %br
-  #{contact.fax}
-  %br
-  #{contact.phone} ext. #{contact.extension}
+.panel.panel-default
+  .panel-body
+    %dl
+      %dt= Contact.human_attribute_name(:name)
+      %dd= contact.name
+      %dt= Contact.human_attribute_name(:title)
+      %dd= contact.title
+      %dt= Contact.human_attribute_name(:email)
+      %dd= contact.email
+      %dt= Contact.human_attribute_name(:fax)
+      %dd= contact.fax
+      %dt= Contact.human_attribute_name(:phone)
+      %dd= contact.phone
+      %dt= Contact.human_attribute_name(:ext)
+      %dd= contact.ext

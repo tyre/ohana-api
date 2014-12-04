@@ -1,5 +1,12 @@
-%p
-  #{address.street}
-  %br
-  #{address.city}, #{address.state} #{address.zip}
-  
+.panel.panel-default
+  .panel-body
+    %dl
+      %dt= Address.human_attribute_name(:street)
+      %dd= address.street
+      %dt= Address.human_attribute_name(:city)
+      %dd= address.city
+      %dt= Address.human_attribute_name(:state)
+      %dd= address.state
+      %dt= Address.human_attribute_name(:zip)
+      %dd= address.zip
+      

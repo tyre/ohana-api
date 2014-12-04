@@ -1,12 +1,13 @@
-%p
-  - if phone.number_type
-    #{phone.number_type}
-    %br
-  - if phone.vanity_number
-    #{phone.vanity_number}
-    %br
-  #{phone.number}
-  - if phone.extension
-    ext. #{phone.extension}
-  %br
-  #{phone.department}
+.panel.panel-default
+  .panel-body
+    %dl
+      %dt= Phone.human_attribute_name(:number_type)
+      %dd= phone.number_type
+      %dt= Phone.human_attribute_name(:vanity_number)
+      %dd= phone.vanity_number
+      %dt= Phone.human_attribute_name(:number)
+      %dd= phone.number
+      %dt= Phone.human_attribute_name(:extension)
+      %dd= phone.extension
+      %dt= Phone.human_attribute_name(:department)
+      %dd= phone.department

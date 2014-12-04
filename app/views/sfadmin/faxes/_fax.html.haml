@@ -1,4 +1,7 @@
-%p
-  #{fax.number}
-  %br
-  #{fax.department}
+.panel.panel-default
+  .panel-body
+    %dl
+      %dt= Fax.human_attribute_name(:number)
+      %dd= fax.number
+      %dt= Fax.human_attribute_name(:department)
+      %dd= fax.department
