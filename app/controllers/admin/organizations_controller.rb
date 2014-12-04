@@ -11,11 +11,11 @@ class Admin
     def edit
       @admin_decorator = AdminDecorator.new(current_admin)
       @organization = Organization.find(params[:id])
-
       unless @admin_decorator.allowed_to_access_organization?(@organization)
         redirect_to admin_dashboard_path,
                     alert: "Sorry, you don't have access to that page."
       end
+      render 'admin/organizations/edit'
     end
 
     def update

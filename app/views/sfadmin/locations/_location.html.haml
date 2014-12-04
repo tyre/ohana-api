@@ -13,6 +13,10 @@
   %dd= location.hours
   %dt= Location.human_attribute_name :transportation
   %dd= location.transportation
+  %dt= Location.human_attribute_name :latitude
+  %dd= location.latitude
+  %dt= Location.human_attribute_name :longitude
+  %dd= location.longitude
   %dt= Location.human_attribute_name :urls
   %dd
     %ul.list-unstyled
@@ -38,3 +42,24 @@
     %ul.list-unstyled
       - location.accessibility.each do |accessibility|
         %li= t "accessibility.#{accessibility}"
+  %dt= Location.human_attribute_name :address
+  %dd= render partial: 'sfadmin/addresses/address', locals: { address: location.address }
+  %dt= Location.human_attribute_name :contacts
+  %dd
+    %ul
+      - location.contacts.each do |contact|
+        %li= render partial: 'sfadmin/contacts/contact', locals: { contact: contact }
+  %dt= Location.human_attribute_name :faxes
+  %dd
+    %ul
+      - location.faxes.each do |fax|
+        %li= render partial: 'sfadmin/faxes/fax', locals: { fax: fax }
+  %dt= Location.human_attribute_name :mail_address
+  %dd
+    - if location.mail_address
+      = render partial: 'sfadmin/mail_addresses/mail_address', locals: { mail_address: location.mail_address }
+  %dt= Location.human_attribute_name :phones
+  %dd
+    %ul
+      - location.phones.each do |phone|
+        %li= render partial: 'sfadmin/phones/phone', locals: { phone: phone }
