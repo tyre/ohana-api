@@ -12,6 +12,8 @@ gem 'bootstrap-sass'
 gem 'bootstrap-kaminari-views'
 gem 'bootstrap_form'
 
+gem 'simple_form'
+
 # Rails 4
 gem 'protected_attributes'
 # gem 'rails-observers'

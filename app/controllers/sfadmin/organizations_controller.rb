@@ -14,10 +14,25 @@ module Sfadmin
     end
 
     def show
-      
+    end
+
+    def edit
+    end
+
+    def update
+      if(@organization.update(organization_params))
+        flash[:notice] = "Organization saved successfully"
+        render :show
+      else
+        render :edit
+      end
     end
 
     private
+
+    def organization_params
+      params.require(:organization)
+    end
 
     def load_organization
       @organization = Organization.friendly.find params[:id]

@@ -4,7 +4,7 @@
     .col-sm-12
       %h1.page-header
         = yield :title
-        = link_to '(edit)', edit_admin_organization_path(@organization.slug)
+        = link_to '(edit)', edit_sfadmin_organization_path(@organization.slug)
       = aasm_validation_errors_for(@organization)
       = render @organization
       %h2.sub-header= Location.model_name.human.pluralize
@@ -13,7 +13,7 @@
           .panel-heading
             %h3.panel-title
               = location.name
-              = link_to '(edit)', edit_admin_location_path(location.slug)
+              = link_to '(edit)', edit_sfadmin_organization_path(@organization.slug)
           .panel-body
             = aasm_validation_errors_for(location)
             = render location
