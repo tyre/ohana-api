@@ -5,6 +5,12 @@ set -e
 echo "===> Bundling..."
 bundle install
 
+
+if [ ! -f config/application.yml ]; then
+  echo "Copying config/application.example.yml => config/application.yml"
+  cp config/application.example.yml config/application.yml
+fi
+
 script/setup_db
 
 script/users

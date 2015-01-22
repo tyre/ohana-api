@@ -49,17 +49,6 @@ Clone it on your computer and navigate to the project's directory:
 
 _Note: Installation and preparation can take several minutes to complete!_
 
-### Set up the environment variables & customizable settings
-
-Inside the `config` folder, you will find a file named `application.example.yml`.
-Copy its contents to a new file called `application.yml`.
-
-Inside the `config` folder, you will also find a file called
-`settings.example.yml`. Copy its contents to a new file called `settings.yml`,
-overwriting the one that already exists.
-
-Please read through the instructions in both files carefully.
-
 ### Run the app
 
 Start the app locally on port 8080:
