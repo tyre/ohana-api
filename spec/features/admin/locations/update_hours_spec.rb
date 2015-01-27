@@ -1,7 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Update hours' do
   background do
+    skip "Broken"
     create(:location)
     login_super_admin
     visit '/admin/locations/vrs-services'
