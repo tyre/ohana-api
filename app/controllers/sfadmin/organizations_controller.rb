@@ -16,9 +16,6 @@ module Sfadmin
     def show
     end
 
-    def edit
-    end
-
     def update
       if(@organization.update(organization_params))
         flash[:notice] = "Organization saved successfully"

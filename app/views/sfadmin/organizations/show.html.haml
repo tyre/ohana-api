@@ -2,9 +2,6 @@
 .container
   .row
     .col-sm-12
-      %h1.page-header
-        = yield :title
-        = link_to '(edit)', edit_sfadmin_organization_path(@organization.slug)
       = aasm_validation_errors_for(@organization)
       = render @organization
       %h2.sub-header= Location.model_name.human.pluralize

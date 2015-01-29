@@ -1,5 +1,0 @@
-- content_for :title, "Edit #{@organization.name}"
-
-= simple_form_for(@organization, url: sfadmin_organization_path(@organization)) do |f|
-  = f.input :name
-  = f.button :submit
