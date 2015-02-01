@@ -8,6 +8,8 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'shoulda/matchers'
 
+require "support/wait_for_ajax"
+
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 Capybara.default_wait_time = 5

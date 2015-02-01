@@ -37,6 +37,9 @@ GEM
     auto_strip_attributes (2.0.5)
       activerecord (>= 3.0)
     bcrypt (3.1.7)
+    best_in_place (3.0.3)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -286,6 +289,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.8.0)
   ancestry
   auto_strip_attributes (~> 2.0)
+  best_in_place
   better_errors (>= 0.7.2)
   binding_of_caller (>= 0.7.1)
   bootstrap-kaminari-views

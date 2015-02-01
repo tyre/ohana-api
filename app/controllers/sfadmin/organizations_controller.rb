@@ -1,6 +1,7 @@
 module Sfadmin
   class OrganizationsController < Sfadmin::AdminController
     before_action :load_organization, except: [:index]
+    respond_to :json, only: [:update]
 
     def index
       @organizations = Organization
@@ -18,17 +19,19 @@ module Sfadmin
 
     def update
       if(@organization.update(organization_params))
-        flash[:notice] = "Organization saved successfully"
-        render :show
+        respond_with :@organization
       else
-        render :edit
+        render(
+          status: :unprocessable_entity,
+          json: @organization.errors.full_messages,
+        )
       end
     end
 
     private
 
     def organization_params
-      params.require(:organization)
+      params.require(:organization).permit(:name)
     end
 
     def load_organization

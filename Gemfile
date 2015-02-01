@@ -14,6 +14,8 @@ gem 'bootstrap_form'
 
 gem 'simple_form'
 
+gem 'best_in_place'
+
 # Rails 4
 gem 'protected_attributes'
 # gem 'rails-observers'

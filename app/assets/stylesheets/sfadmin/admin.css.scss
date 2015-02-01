@@ -6,6 +6,20 @@ body {
   padding-top: 60px;
 }
 
+.best_in_place .btn {
+  margin-left: 1em;
+}
+
+.best_in_place {
+  content: "";
+  display: inline-block;
+  background-image: image-url("edit.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
 .label-finished-job {
   @extend .label-success;
 }

@@ -10,7 +10,6 @@
           .panel-heading
             %h3.panel-title
               = location.name
-              = link_to '(edit)', edit_sfadmin_organization_path(@organization.slug)
           .panel-body
             = aasm_validation_errors_for(location)
             = render location
