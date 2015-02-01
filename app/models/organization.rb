@@ -1,7 +1,9 @@
 class Organization < ActiveRecord::Base
   include ValidationState
+  PROTOCOL_REGEX = URI::regexp(["http", "https"])
+  URI_REGEX = /\A#{PROTOCOL_REGEX}.+\..*\z/
 
-  default_scope { order('id DESC') }
+  default_scope { order("id DESC") }
 
   attr_accessible :name, :urls
 
@@ -9,15 +11,15 @@ class Organization < ActiveRecord::Base
   # accepts_nested_attributes_for :locations
   validates_associated :locations
 
-  validates :name, presence: { message: "can't be blank for Organization" }
+  validates :name, presence: true
 
   # Custom validation for values within arrays.
   # For example, the urls field is an array that can contain multiple URLs.
   # To be able to validate each URL in the array, we have to use a
   # custom array validator. See app/validators/array_validator.rb
   validates :urls, array: {
-    format: { with: %r{\Ahttps?://([^\s:@]+:[^\s:@]*@)?[A-Za-z\d\-]+(\.[A-Za-z\d\-]+)+\.?(:\d{1,5})?([\/?]\S*)?\z}i,
-              message: '%{value} is not a valid URL', allow_blank: true } }
+    format: { with: URI_REGEX,
+              message: "is not a valid URL", allow_blank: true } }
 
   serialize :urls, Array
 
@@ -37,7 +39,7 @@ class Organization < ActiveRecord::Base
   end
 
   def domain_name
-    URI.parse(urls.first).host.gsub(/^www\./, '') if urls.present?
+    URI.parse(urls.first).host.gsub(/^www\./, "") if urls.present?
   end
 
   after_save :touch_locations
