@@ -28,6 +28,7 @@ gem "protected_attributes"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rails", "~> 4.1.1"
+gem "react-rails", "~> 1.0.0.pre", github: "reactjs/react-rails"
 gem "sass-rails", "~> 4.0.3"
 gem "uglifier", ">= 1.3.0"
 
