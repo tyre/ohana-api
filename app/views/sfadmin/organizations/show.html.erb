@@ -1,0 +1,37 @@
+<% content_for :title, @organization.name %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <%= aasm_validation_errors_for(@organization) %>
+      <%= render @organization %>
+      <h2 class="sub-header"><%= Location.model_name.human.pluralize %></h2>
+      <% @organization.locations.includes(:services).each do |location| %>
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= location.name %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <%= aasm_validation_errors_for(location) %>
+            <%= render location %>
+          </div>
+
+          <% location.services.each do |service| %>
+            <div class="panel-heading">
+              <%= service.name %>
+            </div>
+
+            <div class="panel-body">
+              <%= aasm_validation_errors_for(service) %>
+              <%= render service %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
