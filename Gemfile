@@ -12,8 +12,6 @@ gem 'bootstrap-sass'
 gem 'bootstrap-kaminari-views'
 gem 'bootstrap_form'
 
-gem 'simple_form'
-
 gem 'best_in_place'
 
 # Rails 4
