@@ -19,11 +19,11 @@ module Sfadmin
 
     def update
       if(@organization.update(organization_params))
-        respond_with :@organization
+        render json: @organization.to_json
       else
         render(
           status: :unprocessable_entity,
-          json: @organization.errors.full_messages,
+          json: @organization.errors,
         )
       end
     end
