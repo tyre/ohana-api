@@ -26,7 +26,7 @@ feature "Update name", :js do
   def change_attribute(attribute, value)
     find(".organization-inline-form .name").click
 
-    find('input.organization-name').set(value)
+    find("input.organization-name").set(value)
     click_button "Save"
 
     wait_for_ajax

@@ -30,7 +30,7 @@ feature "Update urls", :js do
     login_super_admin
 
     visit sfadmin_organization_path(organization)
-    all('.url').last.find('a').click
+    all(".url").last.find("a").click
 
     expect(page).to_not have_content(original_urls.last)
     expect(page).to have_content(original_urls.first)
