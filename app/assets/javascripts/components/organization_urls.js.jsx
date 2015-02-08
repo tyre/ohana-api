@@ -7,7 +7,9 @@ OrganizationURLs = React.createClass({
 
         { urls.map(this.render_url) }
 
-        <input ref="newUrl" /><a>Add URL</a>
+        <input className="new-url" ref="newUrl" defaultValue="" />
+        <a href="#" onClick={this.addUrl}>Add URL</a>
+
         </div>
         );
   },
@@ -28,5 +30,16 @@ OrganizationURLs = React.createClass({
       urls.splice(index, 1);
       this.props.onSave({urls: urls});
     }.bind(this);
+  },
+
+  addUrl: function() {
+    var urls = this.props.organization.urls;
+    var newUrl = this.refs.newUrl.getDOMNode().value;
+    this.refs.newUrl.getDOMNode().value = '';
+    debugger;
+
+    this.props.onSave({
+      urls: urls.concat(newUrl),
+    });
   },
 });

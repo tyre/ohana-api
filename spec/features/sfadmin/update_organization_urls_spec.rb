@@ -11,7 +11,7 @@ feature "Update urls", :js do
     expect(page).to have_content "can't be blank"
   end
 
-  xscenario "adding a valid URL" do
+  scenario "adding a valid URL" do
     organization = create(:organization)
     url = "http://example.com"
     login_super_admin
@@ -37,6 +37,8 @@ feature "Update urls", :js do
   end
 
   def add_url(url)
-    find(".urls input").set(url)
+    find(".new-url").set(url)
+    click_on "Add URL"
+    wait_for_ajax
   end
 end
