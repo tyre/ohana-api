@@ -1,7 +1,7 @@
 require "rails_helper"
 
 feature "Update name", :js do
-  xscenario "with empty organization name" do
+  scenario "with empty organization name" do
     organization = create(:organization)
     login_super_admin
 

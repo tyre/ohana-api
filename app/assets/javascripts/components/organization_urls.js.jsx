@@ -9,6 +9,7 @@ OrganizationURLs = React.createClass({
 
         <input className="new-url" ref="newUrl" defaultValue="" />
         <a href="#" onClick={this.addUrl}>Add URL</a>
+        <span className="error">{this.errors()[0]}</span>
 
         </div>
         );
@@ -25,7 +26,6 @@ OrganizationURLs = React.createClass({
 
   removeUrl: function(index) {
     return function() {
-      console.log("Removing URL #" + index);
       var urls = this.props.organization.urls;
       urls.splice(index, 1);
       this.props.onSave({urls: urls});
@@ -36,10 +36,13 @@ OrganizationURLs = React.createClass({
     var urls = this.props.organization.urls;
     var newUrl = this.refs.newUrl.getDOMNode().value;
     this.refs.newUrl.getDOMNode().value = '';
-    debugger;
 
     this.props.onSave({
       urls: urls.concat(newUrl),
     });
+  },
+
+  errors: function() {
+    return this.props.errors.urls || [];
   },
 });

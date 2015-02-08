@@ -12,6 +12,7 @@ OrganizationName = React.createClass({
       return(
           <h1 className="name" onClick={this.edit}>
           {this.props.organization.name}
+          <span className="error">{this.errors()[0]}</span>
           </h1>
           );
     }
@@ -39,23 +40,22 @@ OrganizationName = React.createClass({
   cancel: function() {
     if(this.state.mouseDown) {
       return this.setState({ mouseDown: false });
-    };
-
-    console.log("cancel");
+    }
     this.setState({
       editing: false,
     });
   },
 
   save: function(e) {
-    console.log("save");
     e.preventDefault();
 
     var newName = this.refs.input.getDOMNode().value;
-    this.setState({
-      editing: false,
-    }, function() {
-      this.props.onSave({ name: newName });
-    });
+    this.setState({ editing: false },
+        function() { this.props.onSave({ name: newName })
+        });
+  },
+
+  errors: function() {
+    return this.props.errors.name || [];
   },
 });

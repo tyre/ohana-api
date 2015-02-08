@@ -1,14 +1,14 @@
 require "rails_helper"
 
 feature "Update urls", :js do
-  xscenario "adding an empty URL" do
+  scenario "adding an invalid URL" do
     organization = create(:organization)
     login_super_admin
 
     visit sfadmin_organization_path(organization)
-    add_url("")
+    add_url("foobar")
 
-    expect(page).to have_content "can't be blank"
+    expect(page).to have_content "is not a valid URL"
   end
 
   scenario "adding a valid URL" do
