@@ -6,7 +6,7 @@
 
       <%= aasm_validation_errors_for(@organization) %>
 
-      <%= react_component("OrganizationForm", @organization.to_json, {prerender: true}) %>
+      <%= react_component("Organization", @organization.to_json, {prerender: true}) %>
       <%= render @organization %>
 
       <h2 class="sub-header"><%= Location.model_name.human.pluralize %></h2>

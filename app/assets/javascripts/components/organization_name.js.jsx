@@ -1,9 +1,9 @@
-OrganizationForm = React.createClass({
+OrganizationName = React.createClass({
   render: function() {
     if(this.state.editing) {
       return(
           <form onMouseDown={this.mouseDown} onBlur={this.cancel} onSubmit={this.save}>
-          <input ref="input" defaultValue={this.state.organization.name}></input>
+          <input ref="input" defaultValue={this.props.organization.name}></input>
           <input type="submit" value="Save"></input>
           <a onClick={this.cancel}>Cancel</a>
           </form>
@@ -11,23 +11,23 @@ OrganizationForm = React.createClass({
     } else {
       return(
           <h1 onClick={this.edit}>
-          {this.state.organization.name}
+          {this.props.organization.name}
           </h1>
           );
     }
   },
 
   getInitialState: function() {
-    return {organization: this.props};
+    return {
+      editing: false,
+      mouseDown: false,
+    };
   },
 
   edit: function() {
-    this.setState(
-        {
-          editing: true,
-        },
-        function() { this.refs.input.getDOMNode().focus(); }
-        );
+    this.setState({ editing: true }, function() {
+      this.refs.input.getDOMNode().focus();
+    });
   },
 
   mouseDown: function() {
@@ -54,24 +54,8 @@ OrganizationForm = React.createClass({
     var newName = this.refs.input.getDOMNode().value;
     this.setState({
       editing: false,
-      organization: { name: newName },
     }, function() {
-      $.ajax({
-        url: this.url(),
-        dataType: 'json',
-        type: 'PUT',
-        data: { organization: this.state.organization },
-        success: function(data) {
-          this.setState(data)
-        }.bind(this),
-        error: function(xhr, status, err) {
-          alert("Error! " + err);
-        }.bind(this)
-      });
+      this.props.onSave({ name: newName });
     });
-  },
-
-  url: function() {
-    return '/sfadmin/organizations/' + this.props.slug;
   },
 });
