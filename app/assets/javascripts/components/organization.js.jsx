@@ -1,6 +1,11 @@
 Organization = React.createClass({
   render: function() {
-    return <OrganizationName onSave={this.submit} organization={this.state} />;
+    return(
+        <div className="organization-inline-form">
+        <OrganizationName onSave={this.submit} organization={this.state} />
+        <OrganizationURLs onSave={this.submit} organization={this.state} />
+        </div>
+        );
   },
 
   getInitialState: function() {
@@ -8,6 +13,8 @@ Organization = React.createClass({
   },
 
   submit: function(data) {
+    console.log(JSON.stringify(data));
+
     $.ajax({
       url: this.url(),
       dataType: 'json',
