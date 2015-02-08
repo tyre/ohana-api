@@ -2,15 +2,15 @@ OrganizationName = React.createClass({
   render: function() {
     if(this.state.editing) {
       return(
-          <form onMouseDown={this.mouseDown} onBlur={this.cancel} onSubmit={this.save}>
-          <input ref="input" defaultValue={this.props.organization.name}></input>
+          <form className="organization-name" onMouseDown={this.mouseDown} onSubmit={this.save}>
+          <input className="organization-name" ref="input" defaultValue={this.props.organization.name}></input>
           <input type="submit" value="Save"></input>
           <a onClick={this.cancel}>Cancel</a>
           </form>
           );
     } else {
       return(
-          <h1 onClick={this.edit}>
+          <h1 className="name" onClick={this.edit}>
           {this.props.organization.name}
           </h1>
           );
