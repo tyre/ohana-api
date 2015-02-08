@@ -5,9 +5,9 @@ OrganizationURLs = React.createClass({
         <div className="urls">
         <p><strong>URLs</strong></p>
 
-        { this.props.organization.urls.map(this.render_url) }
+        { urls.map(this.render_url) }
 
-        <input ref="newUrl" /><a>Add</a>
+        <input ref="newUrl" /><a>Add URL</a>
         </div>
         );
   },
