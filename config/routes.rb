@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   end
 
   namespace :sfadmin do
+    resources :locations, only: [:update, :show, :edit]
     resources :organizations, only: [:index, :show, :update] do
       resources :locations do
         resources :addresses

@@ -3,7 +3,6 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-
       <%= aasm_validation_errors_for(@organization) %>
 
       <%= react_component("Organization", @organization.to_json, {prerender: true}) %>
@@ -15,7 +14,7 @@
 
           <div class="panel-heading">
             <h3 class="panel-title">
-              <%= location.name %>
+              <%= link_to location.name, edit_sfadmin_organization_location_path(@organization, location) %>
             </h3>
           </div>
 
