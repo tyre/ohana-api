@@ -2,7 +2,7 @@ OrganizationName = React.createClass({
   render: function() {
     if(this.state.editing) {
       return(
-          <form className="organization-name" onMouseDown={this.mouseDown} onSubmit={this.save}>
+          <form className="organization-name" onBlur={this.cancel} onMouseDown={this.mouseDown} onSubmit={this.save}>
           <input className="organization-name" ref="input" defaultValue={this.props.organization.name}></input>
           <input type="submit" value="Save"></input>
           <a onClick={this.cancel}>Cancel</a>
@@ -32,25 +32,23 @@ OrganizationName = React.createClass({
   },
 
   mouseDown: function() {
-    this.setState({
-      mouseDown: true
-    });
+    this.setState({ mouseDown: true });
   },
 
   cancel: function() {
     if(this.state.mouseDown) {
-      return this.setState({ mouseDown: false });
+      this.setState({ mouseDown: false });
+    } else {
+      this.setState({ editing: false });
     }
-    this.setState({
-      editing: false,
-    });
   },
 
   save: function(e) {
     e.preventDefault();
 
     var newName = this.refs.input.getDOMNode().value;
-    this.setState({ editing: false },
+    this.setState(
+        { editing: false },
         function() { this.props.onSave({ name: newName })
         });
   },
