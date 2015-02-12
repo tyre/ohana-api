@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="assets/application.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+
+    body{
+    	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    	color: #444;
+        background-color: #222;
+    }
+
+    .container{
+    	margin:0 auto;
+    	padding:0px 30px 0px 30px;
+    	width:1000px;
+    	background-color: #fff;
+    }
+
+    .border-above{
+     	border-top:1px solid #bbb;
+    	padding-top:10px;
+    }
+
+    h2, h4 {
+    	font-weight: 600
+    }
+
+    .value {
+    	font-weight: 600;
+    	margin-top: none;
+    }
+
+    .value.big {
+    	font-size: 18px;
+    }
+
+
+    label{
+    	color:#888;
+    	font-style:italic;
+    	font-weight:normal;
+    }
+
+    .btn {
+    	
+    }
+
+    .row
+    	{
+    	padding: 10px 0px 10px 0px;
+    }
+
+    .form-control{
+    	display:inline;
+    	width:96%;
+    }
+
+    .twothirds{
+    	width:62%;
+    	margin-right: 3%
+    }
+
+    .onethird{
+    	width:30%;
+    	margin-right: 3%
+    }
+
+    .sub-container{
+    	border:1px solid #ddd;
+    	border-radius: 4px;
+    	padding:10px;
+    	background-color: #fff;
+    	margin-bottom: 10px;
+    }
+
+ 	.sub-container-wrapper{
+    	border:1px solid #ddd;
+    	border-radius: 4px;
+    	padding:10px;
+    	background-color: #eee;
+    }
+
+    .checkbox{
+    	margin-right: 20px;
+    	display:inline-block;
+    }
+
+    .btn-gray{
+    	background-color: #bbb;
+    	color:white;
+    	width:100%;
+    }
+
+    .btn-gray:hover{
+    	background-color: #adadad;
+    	color:white;
+    }
+
+
+    </style>
+
+
+
+  </head>
+  <body>
+    <div class="container">
+    <form>
+    	
+    <!-- organiztion name // single-value inline edit-->
+    	<h2 class="border-above">The Riley Center<button class="btn btn-primary">Edit</button></h2>
+    	 
+    <!-- Editor information // populated directly from database -->
+    	 <div class="row">
+	    	 <div class="col-md-3">
+		    	 <label>Last Edited</label>
+		    	 <p class="value">Jun 25, 2014</p>
+	    	 </div>
+	    	 <div class="col-md-3">
+		    	 <label>Editors</label>
+		    	 <p class="value">Joe Schmo, Jane Schmane</p>
+		   	</div>
+		 </div>  	
+
+	<!-- Organization URL(s) // allows 0 to n responses-->
+		 <div class="row">
+	    	 <div class="col-md-6">
+		    	 <div class="form-group">
+			    	 <label>URLs</label>
+			    	 <p class="value big">http://www.website.com</p>
+			    	 <input type="url" class="form-control" id="organizationURL" placeholder="Add URL"><a class="btn btn-primary">Save URL</a>
+			    </div>	 
+	    	 </div>
+		 </div>  
+
+	<!-- Programs // allows 0 to n responses // multiple fields -->
+
+		 <div class="row">
+	    	 <div class="col-md-10">
+		    	 <div class="form-group ">
+			    	 <h4 class="border-above">Programs<small> (1) </small></h4>
+
+			    	
+						
+						<!-- Programs // existing block-->	
+			    	 	<div class="sub-container">
+			    	 	<a class="btn btn-primary" style="float:right;">Edit</a>
+					    	 <div class="row">
+		    	 				<div class="col-md-6">
+		    	 					<label>Name</label>
+					    	 		<p class="value big">Program Name One</p>
+					    	 	</div>
+					    	 	<div class="col-md-4">
+						    	  	<label>Alt Name</label>
+							    	<p class="value">Program alt name</p>
+							    </div>	
+					    	 </div>	
+					    	 <label>Services</label>
+					    	 <p><a>Service Name One</a>, <a>Service Name Two</a></p>	
+					    </div>	 
+			    	 
+					<!-- Programs // add new block-->		    	 
+			    	 <div class="sub-container">
+			    	 		<div style="float:right">
+			    	 		<a class="btn btn-primary" style="float:right;">Save</a><br>
+			    	 		<a class="btn btn-gray btn-xs" style="float:right;margin-top:5px;">Cancel</a>
+			    	 		</div>
+			    	 		<div class="row">
+		    	 				<div class="col-md-6">
+							    	<label>Name</label>	
+							    	<p><input type="text" class="form-control" id="programName1" placeholder="Add Program Name"></p>
+				    	  		</div>
+				    	  		<div class="col-md-4">
+						    	  	<label>Alt Name</label>
+							    	<p><input type="text" class="form-control" id="programAltName1" placeholder="Add Alt Name"></p>
+							    </div>	
+							  </div>  
+							    	<div class="checkbox">
+									    <label>
+									      <input type="checkbox"> Service One
+									    </label>
+									  </div>
+									  <div class="checkbox">
+									    <label>
+									      <input type="checkbox"> Service Two
+									    </label>
+									  </div>
+										<div class="checkbox">
+									    <label>
+									      <input type="checkbox"> Service Three
+									    </label>
+									  </div>
+				    			</div>	
+			    	<!-- Programs // create new empty block-->	
+			    		<button class="btn btn-gray btn-add-new">+ Add New Program</button>
+
+
+			    </div>	 
+	    	 </div>
+		</div> 	 
+
+
+	<!-- Locations// allows 1 to n responses // multiple fields -->
+
+		 <div class="row">
+	    	 <div class="col-md-10">
+		    	 <div class="form-group">
+			    	 <h4 class="border-above">Locations<small> (3) </small></h4>
+
+			    	 <div class="sub-container-wrapper">
+						<h4 class="border-above">Physical Location</h4>
+
+						<!-- Map and Address-->	
+			    	 		<div>
+			    	 			<div class="onethird sub-container">
+					    	 		<p class="value big">Map goes here</p>
+			    	 			</div>
+			    	 			<div class="twothirds sub-container">
+			    	 					<a class="btn btn-primary" style="float:right;">Edit</a>
+			    	 						<label>Name</label>
+							    			<p class="value big">The Riley Center</p>
+							    			<br>
+							    			<label>Address</label>
+							    			<p class="value big">The Women’s Building, 3543 18th Street, 3rd Floor</p>
+							    			<p class="value">San Francisco, CA 94110</p>
+							    			<br>
+					    	 				<div class="row">
+					    	 					<div class="col-md-3">
+					    	 						<label>Latitude</label>
+						    	 					<p class="value">37.7485824</p>
+						    	 				</div>	
+						    	 				<div class="col-md-3">
+					    	 						<label>Longitude</label>
+						    	 					<p class="value"> -122.4184108</p>
+						    	 				</div>	
+						    	 			</div>	
+					    	 	</div>
+			    	 		</div>
+			    	 	<!-- Description-->	
+			    	 		<div class="sub-container">
+			    	 			<a class="btn btn-primary" style="float:right;">Edit</a>
+			    	 			<div class="row">
+			    	 				<div class="col-md-10">
+			    	 						<label>Short Description</label>
+					    	 				<p class="value big">The Riley Center, a program of the St. Vincent de Paul Society of San Francisco, offers safe and confidential services women in abusive relationships and their children through Rosalie House, Brennan House, The Community Office, and CalWORKs.</p>
+					    	 				<br>
+					    	 				<label>Description</label>
+					    	 				<p class="value">The Riley Center, a program of the St. Vincent de Paul Society of San Francisco, offers safe and confidential services women…</p>
+					    	 		</div>
+			    	 			</div>
+							</div>
+			    	 			
+			    	 			<h4 class="border-above">Subheader Two</h4>
+			    	 			<h4 class="border-above">Subheader Three</h4>
+					</div>
+
+			    	<!-- Locations // create new empty block-->	
+			    		<button class="btn btn-gray btn-add-new">+ Add New Location</button>
+			    </div>	 
+	    	 </div>
+		</div> 	 
+
+
+
+
+	</form>
+    </div>
+
+	    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	    <script src="js/bootstrap.min.js"></script>
+
+  </body>
+</html>
