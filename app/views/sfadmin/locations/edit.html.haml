@@ -1,0 +1,56 @@
+/ CREATE TABLE locations (
+/     id integer NOT NULL,
+/     organization_id integer,
+/     accessibility text,
+/     admin_emails text,
+/     description text,
+/     emails text,
+/     hours text,
+/     latitude double precision,
+/     longitude double precision,
+/     languages text,
+/     name text,
+/     short_desc text,
+/     transportation text,
+/     urls text,
+/     slug text,
+/     created_at timestamp without time zone,
+/     updated_at timestamp without time zone,
+/     tsv_body tsvector,
+/     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+/     aasm_state_notes text,
+/     aasm_state_errors text,
+/     deleted_at timestamp without time zone
+/ );
+
+/ CREATE TABLE addresses (
+/     id integer NOT NULL,
+/     location_id integer,
+/     street text,
+/     city text,
+/     state text,
+/     zip text,
+/     created_at timestamp without time zone,
+/     updated_at timestamp without time zone,
+/     aasm_state character varying(255) DEFAULT 'record_invalid'::character varying NOT NULL,
+/     aasm_state_notes text,
+/     aasm_state_errors text,
+/     deleted_at timestamp without time zone
+/ );
+
+= form_for [:sfadmin, @location] do |form|
+  - Location.accessibility.options.each do |display_name, option|
+    = form.label display_name
+    = form.check_box :accessibility, { multiple: true }, option
+    %br
+  = form.text_field :description
+  = form.text_field :short_desc
+
+  %h2 Address Information
+
+  = fields_for @location.address do |address_form|
+    = address_form.text_field :street
+    = address_form.text_field :city
+    = address_form.text_field :state
+    = address_form.text_field :zip
+  = form.submit
