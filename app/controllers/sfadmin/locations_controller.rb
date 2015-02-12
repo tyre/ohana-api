@@ -23,9 +23,9 @@ module Sfadmin
 
     def location_params
       permitted_params = params.require(:location).
-                                permit(:description, :short_desc, :accessibility, :address)
+                                permit(:description, :short_desc, :address, accessibility: [])
+      permitted_params[:accessibility] -= ['0']
       permitted_params[:address_attributes] = permitted_params[:address] if permitted_params.has_key?(:address)
-      permitted_params[:accessibility] = permitted_params[:accessibility].to_sym if permitted_params[:accessibility]
       permitted_params
     end
   end
